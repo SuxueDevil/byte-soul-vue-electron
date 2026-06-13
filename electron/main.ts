@@ -58,10 +58,16 @@ function createWindow() {
   const isDev = !app.isPackaged
   
   if (isDev) {
-    // 开发环境：加载 Vite 开发服务器
+    // 开发环境：等待 Vite 服务器就绪后加载
     const devUrl = getViteDevServerUrl()
-    console.log('Loading dev server:', devUrl)
-    mainWindow.loadURL(devUrl)
+    console.log('Waiting for dev server:', devUrl)
+    
+    // 延迟加载，等待 Vite 编译完成
+    setTimeout(() => {
+      mainWindow?.loadURL(devUrl)
+      console.log('Loaded dev server')
+    }, 1000)
+    
     mainWindow.webContents.openDevTools()
   } else {
     // 生产环境：加载打包后的文件
