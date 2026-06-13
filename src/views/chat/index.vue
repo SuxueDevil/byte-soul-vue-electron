@@ -109,6 +109,36 @@
       <div class="chat-area">
         <!-- 1、消息列表 -->
         <div class="messages" ref="messagesContainer">
+          <!-- 空状态 - Codex 风格欢迎页 -->
+          <div v-if="messages.length === 0" class="welcome-page">
+            <div class="welcome-content">
+              <div class="welcome-logo">
+                <i class="pi pi-android"></i>
+              </div>
+              <h1 class="welcome-title">ByteSoul</h1>
+              <p class="welcome-subtitle">AI 代码助手</p>
+              <div class="welcome-suggestions">
+                <div class="suggestion-card" @click="sendMessage('帮我写一个 React 组件')">
+                  <i class="pi pi-code"></i>
+                  <span>帮我写一个 React 组件</span>
+                </div>
+                <div class="suggestion-card" @click="sendMessage('解释一下这段代码')">
+                  <i class="pi pi-info-circle"></i>
+                  <span>解释一下这段代码</span>
+                </div>
+                <div class="suggestion-card" @click="sendMessage('优化这段代码的性能')">
+                  <i class="pi pi-bolt"></i>
+                  <span>优化这段代码的性能</span>
+                </div>
+                <div class="suggestion-card" @click="sendMessage('帮我写单元测试')">
+                  <i class="pi pi-check-circle"></i>
+                  <span>帮我写单元测试</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 消息列表 -->
           <div
             v-for="message in messages"
             :key="message.id"
@@ -181,30 +211,19 @@ import '@/assets/styles/chat.css'
 // ==================== 二、状态 ====================
 
 // 1、标签页
-const projectTabs = ref([
-  { id: '1', name: '项目 A' },
-  { id: '2', name: '项目 B' }])
-const activeTab = ref('1')
+const projectTabs = ref([])
+const activeTab = ref('')
 
 // 2、侧边栏
 const sidebarCollapsed = ref(false)
 const activePanel = ref('chat')
 
 // 3、会话
-const sessions = ref([
-  { id: '1', name: '新会话 1' },
-  { id: '2', name: '新会话 2' }])
-const activeSession = ref('1')
+const sessions = ref([])
+const activeSession = ref('')
 
 // 4、消息
-const messages = ref([
-  {
-    id: '1',
-    role: 'assistant' as const,
-    content: '你好！我是 ByteSoul AI 助手，有什么可以帮你的吗？',
-    timestamp: '10:30'
-  }
-])
+const messages = ref([])
 
 // 5、输入
 const inputText = ref('')

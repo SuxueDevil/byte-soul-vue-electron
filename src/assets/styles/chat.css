@@ -197,6 +197,82 @@
   padding: 24px;
 }
 
+/* 欢迎页 */
+.welcome-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.welcome-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.welcome-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-logo i {
+  font-size: 32px;
+  color: var(--primary-color-text);
+}
+
+.welcome-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  font-size: 16px;
+  color: var(--text-color-secondary);
+  margin-bottom: 48px;
+}
+
+.welcome-suggestions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.suggestion-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--surface-ground);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: left;
+}
+
+.suggestion-card:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--primary-color);
+}
+
+.suggestion-card i {
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
+.suggestion-card span {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
 .message {
   display: flex;
   gap: 16px;
