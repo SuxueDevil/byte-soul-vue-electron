@@ -255,6 +255,8 @@ const uploadDocument = () => {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #FFFFFF;
+  color: #111827;
 }
 
 /* 顶部标签栏 */
@@ -262,8 +264,8 @@ const uploadDocument = () => {
   display: flex;
   align-items: center;
   height: 40px;
-  background-color: var(--color-primary);
-  border-bottom: 1px solid var(--color-secondary);
+  background-color: #F9FAFB;
+  border-bottom: 1px solid #E5E7EB;
 }
 
 .tabs {
@@ -275,16 +277,20 @@ const uploadDocument = () => {
 .tab {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: 0 var(--spacing-md);
+  gap: 8px;
+  padding: 0 16px;
   height: 100%;
   cursor: pointer;
-  border-right: 1px solid var(--color-secondary);
+  border-right: 1px solid #E5E7EB;
   white-space: nowrap;
+  color: #6B7280;
+  font-size: 13px;
 }
 
 .tab.active {
-  background-color: var(--color-bg);
+  background-color: #FFFFFF;
+  color: #111827;
+  border-bottom: 2px solid #2563EB;
 }
 
 .tab-close {
@@ -297,13 +303,14 @@ const uploadDocument = () => {
 }
 
 .add-tab {
-  padding: 0 var(--spacing-sm);
+  padding: 0 8px;
 }
 
 .app-title {
-  padding: 0 var(--spacing-md);
+  padding: 0 16px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: #6B7280;
+  font-size: 14px;
 }
 
 /* 主内容区域 */
@@ -316,11 +323,11 @@ const uploadDocument = () => {
 /* 侧边栏 */
 .sidebar {
   width: 240px;
-  background-color: var(--color-primary);
-  border-right: 1px solid var(--color-secondary);
+  background-color: #F9FAFB;
+  border-right: 1px solid #E5E7EB;
   display: flex;
   flex-direction: column;
-  transition: width var(--transition-normal);
+  transition: width 200ms ease;
 }
 
 .sidebar.collapsed {
@@ -328,84 +335,89 @@ const uploadDocument = () => {
 }
 
 .sidebar-header {
-  padding: var(--spacing-md);
+  padding: 16px;
 }
 
 .nav-items {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: 4px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-sm);
+  gap: 8px;
+  padding: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  color: var(--color-text-muted);
-  transition: all var(--transition-normal);
+  color: #6B7280;
+  transition: all 150ms ease;
+  font-size: 14px;
 }
 
 .nav-item:hover,
 .nav-item.active {
-  background-color: var(--color-secondary);
-  color: var(--color-text);
+  background-color: #E5E7EB;
+  color: #111827;
 }
 
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-md);
+  padding: 16px;
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 16px;
 }
 
 .panel-header h3 {
   font-size: 14px;
   font-weight: 600;
+  color: #374151;
 }
 
 .session-list,
 .knowledge-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: 4px;
 }
 
 .session-item,
 .knowledge-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-sm);
+  gap: 8px;
+  padding: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color var(--transition-normal);
+  transition: background-color 150ms ease;
+  font-size: 13px;
+  color: #374151;
 }
 
 .session-item:hover,
 .knowledge-item:hover {
-  background-color: var(--color-secondary);
+  background-color: #E5E7EB;
 }
 
 .session-item.active {
-  background-color: var(--color-secondary);
+  background-color: #E5E7EB;
 }
 
 .sidebar-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm);
+  padding: 8px;
   cursor: pointer;
-  border-top: 1px solid var(--color-secondary);
+  border-top: 1px solid #E5E7EB;
+  color: #6B7280;
 }
 
 /* 对话区域 */
@@ -419,13 +431,13 @@ const uploadDocument = () => {
 .messages {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-lg);
+  padding: 24px;
 }
 
 .message {
   display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .message.user {
@@ -436,10 +448,11 @@ const uploadDocument = () => {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: var(--color-secondary);
+  background-color: #E5E7EB;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #6B7280;
 }
 
 .message-content {
@@ -447,42 +460,45 @@ const uploadDocument = () => {
 }
 
 .message-text {
-  padding: var(--spacing-md);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  background-color: #F3F4F6;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .message.user .message-text {
-  background-color: var(--color-cta);
-  color: #000;
+  background-color: #2563EB;
+  color: #FFFFFF;
 }
 
 .message-time {
   font-size: 12px;
-  color: var(--color-text-muted);
-  margin-top: var(--spacing-xs);
+  color: #6B7280;
+  margin-top: 4px;
 }
 
 .input-area {
-  padding: var(--spacing-md);
-  border-top: 1px solid var(--color-secondary);
+  padding: 16px;
+  border-top: 1px solid #E5E7EB;
 }
 
 .input-wrapper {
   display: flex;
   align-items: flex-end;
-  gap: var(--spacing-sm);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm);
+  gap: 8px;
+  background-color: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 8px;
 }
 
 .message-input {
   flex: 1;
   background: transparent;
   border: none;
-  color: var(--color-text);
-  font-family: var(--font-ui);
+  color: #111827;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   resize: none;
   outline: none;
@@ -492,14 +508,31 @@ const uploadDocument = () => {
 
 .input-actions {
   display: flex;
-  gap: var(--spacing-xs);
+  gap: 4px;
+}
+
+.input-actions :deep(.p-button) {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+.input-actions :deep(.p-button:hover) {
+  background-color: #1D4ED8 !important;
+  border-color: #1D4ED8 !important;
+}
+
+.input-actions :deep(.p-button-text) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #6B7280 !important;
 }
 
 /* 文件面板 */
 .file-panel {
   width: 260px;
-  background-color: var(--color-primary);
-  border-left: 1px solid var(--color-secondary);
+  background-color: #F9FAFB;
+  border-left: 1px solid #E5E7EB;
   display: flex;
   flex-direction: column;
 }
@@ -508,22 +541,23 @@ const uploadDocument = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--color-secondary);
+  padding: 16px;
+  border-bottom: 1px solid #E5E7EB;
 }
 
 .file-header h3 {
   font-size: 14px;
   font-weight: 600;
+  color: #374151;
 }
 
 .file-search {
-  padding: var(--spacing-md);
+  padding: 16px;
 }
 
 .file-tree {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-sm);
+  padding: 8px;
 }
 </style>
