@@ -19,6 +19,11 @@
 <div class="sidebar" :class="{ collapsed: sidebarCollapsed }">
   <div class="sidebar-header">
     <div class="nav-items">
+      <!-- 折叠按钮 -->
+      <div class="nav-item sidebar-toggle" @click="sidebarCollapsed = !sidebarCollapsed">
+        <i :class="sidebarCollapsed ? 'pi pi-chevron-right' : 'pi pi-chevron-left'"></i>
+        <span v-if="!sidebarCollapsed">收起</span>
+      </div>
       <!-- 1、对话导航 -->
       <div class="nav-item" :class="{ active: activePanel === 'chat' }" @click="activePanel = 'chat'">
         <i class="pi pi-comments"></i>
@@ -102,12 +107,7 @@
       </div>
     </transition>
   </div>
-        
-        <!-- 三、折叠按钮 -->
-        <div class="sidebar-toggle" @click="sidebarCollapsed = !sidebarCollapsed">
-          <i :class="sidebarCollapsed ? 'pi pi-chevron-right' : 'pi pi-chevron-left'"></i>
-        </div>
-      </div>
+</div>
       
       <!-- 三、对话区域 -->
       <div class="chat-area">
