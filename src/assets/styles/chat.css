@@ -14,8 +14,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #FFFFFF;
-  color: #111827;
+  background-color: var(--surface-card);
 }
 
 /* ==================== 二、顶部标签栏 ==================== */
@@ -24,8 +23,8 @@
   display: flex;
   align-items: center;
   height: 40px;
-  background-color: #F9FAFB;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--surface-border);
+  background-color: var(--surface-ground);
 }
 
 .tabs {
@@ -41,16 +40,16 @@
   padding: 0 16px;
   height: 100%;
   cursor: pointer;
-  border-right: 1px solid #E5E7EB;
+  border-right: 1px solid var(--surface-border);
   white-space: nowrap;
-  color: #6B7280;
+  color: var(--text-color-secondary);
   font-size: 13px;
 }
 
 .tab.active {
-  background-color: #FFFFFF;
-  color: #111827;
-  border-bottom: 2px solid #2563EB;
+  background-color: var(--surface-card);
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .tab-close {
@@ -69,7 +68,7 @@
 .app-title {
   padding: 0 16px;
   font-weight: 600;
-  color: #6B7280;
+  color: var(--text-color-secondary);
   font-size: 14px;
 }
 
@@ -85,11 +84,11 @@
 
 .sidebar {
   width: 240px;
-  background-color: #F9FAFB;
-  border-right: 1px solid #E5E7EB;
+  border-right: 1px solid var(--surface-border);
   display: flex;
   flex-direction: column;
   transition: width 200ms ease;
+  background-color: var(--surface-ground);
 }
 
 .sidebar.collapsed {
@@ -113,15 +112,15 @@
   padding: 8px;
   border-radius: 6px;
   cursor: pointer;
-  color: #6B7280;
+  color: var(--text-color-secondary);
   transition: all 150ms ease;
   font-size: 14px;
 }
 
 .nav-item:hover,
 .nav-item.active {
-  background-color: #E5E7EB;
-  color: #111827;
+  background-color: var(--surface-hover);
+  color: var(--text-color);
 }
 
 .sidebar-content {
@@ -140,7 +139,7 @@
 .panel-header h3 {
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-color);
 }
 
 .session-list,
@@ -160,16 +159,16 @@
   cursor: pointer;
   transition: background-color 150ms ease;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-color);
 }
 
 .session-item:hover,
 .knowledge-item:hover {
-  background-color: #E5E7EB;
+  background-color: var(--surface-hover);
 }
 
 .session-item.active {
-  background-color: #E5E7EB;
+  background-color: var(--surface-hover);
 }
 
 .sidebar-toggle {
@@ -178,8 +177,8 @@
   justify-content: center;
   padding: 8px;
   cursor: pointer;
-  border-top: 1px solid #E5E7EB;
-  color: #6B7280;
+  border-top: 1px solid var(--surface-border);
+  color: var(--text-color-secondary);
 }
 
 /* ==================== 五、对话区域 ==================== */
@@ -189,6 +188,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: var(--surface-card);
 }
 
 .messages {
@@ -211,11 +211,11 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #E5E7EB;
+  background-color: var(--surface-ground);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6B7280;
+  color: var(--text-color-secondary);
 }
 
 .message-content {
@@ -224,44 +224,45 @@
 
 .message-text {
   padding: 12px 16px;
-  background-color: #F3F4F6;
+  background-color: var(--surface-ground);
   border-radius: 8px;
   font-size: 14px;
   line-height: 1.5;
+  color: var(--text-color);
 }
 
 .message.user .message-text {
-  background-color: #2563EB;
-  color: #FFFFFF;
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
 }
 
 .message-time {
   font-size: 12px;
-  color: #6B7280;
+  color: var(--text-color-secondary);
   margin-top: 4px;
 }
 
 .input-area {
   padding: 16px;
-  border-top: 1px solid #E5E7EB;
+  border-top: 1px solid var(--surface-border);
 }
 
 .input-wrapper {
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  background-color: #F9FAFB;
-  border: 1px solid #E5E7EB;
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   padding: 8px;
+  background-color: var(--surface-ground);
 }
 
 .message-input {
   flex: 1;
   background: transparent;
   border: none;
-  color: #111827;
-  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text-color);
+  font-family: var(--font-family);
   font-size: 14px;
   resize: none;
   outline: none;
@@ -274,31 +275,14 @@
   gap: 4px;
 }
 
-.input-actions :deep(.p-button) {
-  background-color: #2563EB !important;
-  border-color: #2563EB !important;
-  color: #FFFFFF !important;
-}
-
-.input-actions :deep(.p-button:hover) {
-  background-color: #1D4ED8 !important;
-  border-color: #1D4ED8 !important;
-}
-
-.input-actions :deep(.p-button-text) {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  color: #6B7280 !important;
-}
-
 /* ==================== 六、文件面板 ==================== */
 
 .file-panel {
   width: 260px;
-  background-color: #F9FAFB;
-  border-left: 1px solid #E5E7EB;
+  border-left: 1px solid var(--surface-border);
   display: flex;
   flex-direction: column;
+  background-color: var(--surface-ground);
 }
 
 .file-header {
@@ -306,13 +290,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--surface-border);
 }
 
 .file-header h3 {
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-color);
 }
 
 .file-search {
