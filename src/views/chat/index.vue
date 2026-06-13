@@ -216,38 +216,52 @@
               <div class="config-panel">
                 <h3>检索配置</h3>
                 <div class="config-item">
-                  <label>Top K</label>
-                  <p class="config-desc">返回最相关的 K 个文档片段</p>
+                  <div class="config-item-left">
+                    <label>Top K</label>
+                    <p class="config-desc">返回最相关的 K 个文档片段</p>
+                  </div>
                   <InputNumber v-model="ragConfig.topK" :min="1" :max="20" />
                 </div>
                 <div class="config-item">
-                  <label>相似度阈值</label>
-                  <p class="config-desc">低于阈值的结果将被过滤</p>
+                  <div class="config-item-left">
+                    <label>相似度阈值</label>
+                    <p class="config-desc">低于阈值的结果将被过滤</p>
+                  </div>
                   <InputNumber v-model="ragConfig.scoreThreshold" :min="0" :max="1" :step="0.1" />
                 </div>
                 <div class="config-item">
-                  <label>向量检索</label>
-                  <p class="config-desc">基于语义相似度的检索</p>
+                  <div class="config-item-left">
+                    <label>向量检索</label>
+                    <p class="config-desc">基于语义相似度的检索</p>
+                  </div>
                   <ToggleButton v-model="ragConfig.enableVector" />
                 </div>
                 <div class="config-item">
-                  <label>BM25 检索</label>
-                  <p class="config-desc">基于关键词匹配的检索</p>
+                  <div class="config-item-left">
+                    <label>BM25 检索</label>
+                    <p class="config-desc">基于关键词匹配的检索</p>
+                  </div>
                   <ToggleButton v-model="ragConfig.enableBM25" />
                 </div>
                 <div class="config-item">
-                  <label>重排序</label>
-                  <p class="config-desc">使用 Cross-Encoder 重新排序</p>
+                  <div class="config-item-left">
+                    <label>重排序</label>
+                    <p class="config-desc">使用 Cross-Encoder 重新排序</p>
+                  </div>
                   <ToggleButton v-model="ragConfig.enableReranker" />
                 </div>
                 <div class="config-item">
-                  <label>查询改写</label>
-                  <p class="config-desc">优化检索词提升召回率</p>
+                  <div class="config-item-left">
+                    <label>查询改写</label>
+                    <p class="config-desc">优化检索词提升召回率</p>
+                  </div>
                   <ToggleButton v-model="ragConfig.enableRewrite" />
                 </div>
                 <div class="config-item">
-                  <label>查询扩展</label>
-                  <p class="config-desc">生成多个相关查询扩大召回</p>
+                  <div class="config-item-left">
+                    <label>查询扩展</label>
+                    <p class="config-desc">生成多个相关查询扩大召回</p>
+                  </div>
                   <ToggleButton v-model="ragConfig.enableExpansion" />
                 </div>
               </div>

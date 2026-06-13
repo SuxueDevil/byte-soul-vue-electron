@@ -558,21 +558,31 @@
 }
 
 .config-item {
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.config-item:last-child {
+  border-bottom: none;
+}
+
+.config-item-left {
+  flex: 1;
 }
 
 .config-item label {
-  display: block;
   font-size: 13px;
   font-weight: 500;
   color: var(--text-color);
-  margin-bottom: 4px;
 }
 
 .config-desc {
   font-size: 11px;
   color: var(--text-color-secondary);
-  margin-bottom: 6px;
+  margin-top: 2px;
 }
 
 .document-list {
