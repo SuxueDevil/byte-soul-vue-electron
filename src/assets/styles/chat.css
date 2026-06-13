@@ -571,7 +571,6 @@
 
 .config-item-left {
   flex: 1;
-  margin-right: 12px;
 }
 
 .config-item label {
@@ -584,16 +583,6 @@
   font-size: 11px;
   color: var(--text-color-secondary);
   margin-top: 2px;
-}
-
-/* InputNumber 宽度限制 */
-.config-item :deep(.p-inputnumber) {
-  width: 80px;
-}
-
-.config-item :deep(.p-inputnumber-input) {
-  width: 80px;
-  text-align: center;
 }
 
 .document-list {
