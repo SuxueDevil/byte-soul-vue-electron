@@ -497,6 +497,11 @@
   color: var(--text-color);
 }
 
+.rag-header :deep(.p-button) {
+  padding: 12px 24px;
+  font-size: 14px;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
