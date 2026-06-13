@@ -563,6 +563,7 @@
   justify-content: space-between;
   padding: 12px 0;
   border-bottom: 1px solid var(--surface-border);
+  gap: 16px;
 }
 
 .config-item:last-child {
@@ -571,18 +572,25 @@
 
 .config-item-left {
   flex: 1;
+  min-width: 0;
 }
 
 .config-item label {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-color);
+  display: block;
 }
 
 .config-desc {
   font-size: 11px;
   color: var(--text-color-secondary);
   margin-top: 2px;
+}
+
+.config-item :deep(.p-inputnumber) {
+  flex-shrink: 0;
+  width: 100px;
 }
 
 .document-list {
