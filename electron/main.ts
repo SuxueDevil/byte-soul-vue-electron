@@ -68,10 +68,13 @@ function createWindow() {
     mainWindow.loadFile(join(__dirname, '../dist/index.html'))
   }
 
-  // 3、窗口事件
-  mainWindow.once('ready-to-show', () => {
-    mainWindow?.show()
-    console.log('Window shown')
+  // 3、窗口事件 - 等待页面完全加载后再显示
+  mainWindow.webContents.on('did-finish-load', () => {
+    // 给 Vue 一点时间完成渲染
+    setTimeout(() => {
+      mainWindow?.show()
+      console.log('Window shown')
+    }, 200)
   })
 
   mainWindow.on('closed', () => {
