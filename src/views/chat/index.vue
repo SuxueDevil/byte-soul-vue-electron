@@ -112,9 +112,9 @@
           <!-- 空状态 - Codex 风格欢迎页 -->
           <div v-if="messages.length === 0" class="welcome-page">
             <div class="welcome-content">
-              <div class="welcome-logo">
-                <i class="pi pi-android"></i>
-              </div>
+<div class="welcome-logo">
+  <i class="pi pi-code"></i>
+</div>
               <h1 class="welcome-title">ByteSoul</h1>
               <p class="welcome-subtitle">AI 代码助手</p>
               <div class="welcome-suggestions">
