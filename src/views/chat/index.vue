@@ -234,35 +234,35 @@
                     <label>向量检索</label>
                     <p class="config-desc">基于语义相似度的检索</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableVector" />
+                  <ToggleButton v-model="ragConfig.enableVector" onLabel="" offLabel="" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>BM25 检索</label>
                     <p class="config-desc">基于关键词匹配的检索</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableBM25" />
+                  <ToggleButton v-model="ragConfig.enableBM25" onLabel="" offLabel="" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>重排序</label>
                     <p class="config-desc">使用 Cross-Encoder 重新排序</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableReranker" />
+                  <ToggleButton v-model="ragConfig.enableReranker" onLabel="" offLabel="" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>查询改写</label>
                     <p class="config-desc">优化检索词提升召回率</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableRewrite" />
+                  <ToggleButton v-model="ragConfig.enableRewrite" onLabel="" offLabel="" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>查询扩展</label>
                     <p class="config-desc">生成多个相关查询扩大召回</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableExpansion" />
+                  <ToggleButton v-model="ragConfig.enableExpansion" onLabel="" offLabel="" />
                 </div>
               </div>
               

@@ -593,9 +593,18 @@
   width: 90px;
 }
 
+.config-item :deep(.p-inputnumber-input) {
+  width: 100% !important;
+  min-width: 0;
+}
+
 /* ToggleButton 隐藏文字 */
-.config-item :deep(.p-toggleswitch-label) {
-  display: none;
+.config-item :deep(.p-toggleswitch) {
+  flex-shrink: 0;
+}
+
+.config-item :deep(.p-toggleswitch .p-toggleswitch-label) {
+  display: none !important;
 }
 
 .document-list {
