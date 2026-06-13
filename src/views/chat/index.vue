@@ -33,10 +33,10 @@
         <i class="pi pi-book"></i>
         <span v-if="!sidebarCollapsed">知识库</span>
       </div>
-      <!-- 3、插件导航 -->
-      <div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="activePanel = 'plugins'">
-        <i class="pi pi-puzzle-piece"></i>
-        <span v-if="!sidebarCollapsed">插件</span>
+<!-- 3、插件导航 -->
+<div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="activePanel = 'plugins'">
+  <i class="pi pi-box"></i>
+  <span v-if="!sidebarCollapsed">插件</span>
       </div>
       <!-- 4、设置导航 -->
       <div class="nav-item" :class="{ active: activePanel === 'settings' }" @click="activePanel = 'settings'">
@@ -69,19 +69,54 @@
         </div>
       </div>
       
-      <!-- 2、知识库面板 -->
-      <div v-else-if="activePanel === 'knowledge'" key="knowledge" class="panel-section">
-        <div class="panel-header">
-          <h3>知识库</h3>
-          <Button icon="pi pi-upload" text @click="uploadDocument" />
-        </div>
-        <div class="knowledge-list">
-          <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
-            <i class="pi pi-file"></i>
-            <span>{{ doc.name }}</span>
-          </div>
-        </div>
+<!-- 2、知识库面板 -->
+<div v-else-if="activePanel === 'knowledge'" key="knowledge" class="panel-section">
+  <div class="panel-header">
+    <h3>RAG 知识库</h3>
+    <Button icon="pi pi-plus" text @click="showUploadDialog = true" />
+  </div>
+  
+  <!-- 知识库统计 -->
+  <div class="knowledge-stats">
+    <div class="stat-item">
+      <span class="stat-value">{{ documents.length }}</span>
+      <span class="stat-label">文档数</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">{{ ragConfig.topK }}</span>
+      <span class="stat-label">召回数</span>
+    </div>
+  </div>
+  
+  <!-- 检索配置 -->
+  <div class="rag-config">
+    <h4>检索配置</h4>
+    <div class="config-item">
+      <label>Top K</label>
+      <InputNumber v-model="ragConfig.topK" :min="1" :max="20" />
+    </div>
+    <div class="config-item">
+      <label>相似度阈值</label>
+      <InputNumber v-model="ragConfig.threshold" :min="0" :max="1" :step="0.1" />
+    </div>
+    <div class="config-item">
+      <label>启用重排序</label>
+      <ToggleButton v-model="ragConfig.enableRerank" />
+    </div>
+  </div>
+  
+  <!-- 文档列表 -->
+  <div class="knowledge-list">
+    <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
+      <i class="pi pi-file"></i>
+      <div class="doc-info">
+        <span class="doc-name">{{ doc.name }}</span>
+        <span class="doc-size">{{ doc.size }}</span>
       </div>
+      <Button icon="pi pi-trash" text severity="danger" @click="deleteDocument(doc.id)" />
+    </div>
+  </div>
+</div>
       
       <!-- 3、插件面板 -->
       <div v-else-if="activePanel === 'plugins'" key="plugins" class="panel-section">
@@ -115,9 +150,6 @@
 <!-- 空状态 - Codex 风格欢迎页 -->
 <div v-if="messages.length === 0" class="welcome-page">
 <div class="welcome-content animate__animated animate__fadeIn" style="animation-duration: 0.3s">
-  <div class="welcome-logo animate__animated animate__bounceIn" style="animation-duration: 0.4s">
-    <i class="pi pi-code"></i>
-  </div>
   <h1 class="welcome-title animate__animated animate__fadeInUp" style="animation-duration: 0.3s">ByteSoul</h1>
     <div class="welcome-suggestions">
 <div
@@ -252,9 +284,19 @@ const fileTree = ref([
 
 // 7、知识库
 const documents = ref([
-  { id: '1', name: '项目文档.pdf' },
-  { id: '2', name: 'API 说明.md' }
+  { id: '1', name: '项目文档.pdf', size: '2.4 MB' },
+  { id: '2', name: 'API 说明.md', size: '156 KB' }
 ])
+
+// 8、RAG 配置
+const ragConfig = ref({
+  topK: 5,
+  threshold: 0.7,
+  enableRerank: true
+})
+
+// 9、上传对话框
+const showUploadDialog = ref(false)
 
 // ==================== 三、方法 ====================
 
@@ -303,7 +345,12 @@ const attachImage = () => {
 
 // 7、上传文档
 const uploadDocument = () => {
-  // TODO: 上传文档
+  showUploadDialog.value = true
+}
+
+// 8、删除文档
+const deleteDocument = (id: string) => {
+  documents.value = documents.value.filter(doc => doc.id !== id)
 }
 </script>
 
