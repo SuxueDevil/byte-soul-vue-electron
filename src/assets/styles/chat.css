@@ -1,4 +1,15 @@
-/* ChatView 样式 */
+/**
+ * @description 对话页样式
+ * @author ByteSoul Team
+ * @created 2024-01-15
+ * 
+ * 功能说明：
+ * - 对话页布局
+ * - 标签栏、侧边栏、对话区域、文件树
+ */
+
+/* ==================== 一、页面容器 ==================== */
+
 .chat-view {
   display: flex;
   flex-direction: column;
@@ -7,7 +18,8 @@
   color: #111827;
 }
 
-/* 顶部标签栏 */
+/* ==================== 二、顶部标签栏 ==================== */
+
 .tab-bar {
   display: flex;
   align-items: center;
@@ -61,14 +73,16 @@
   font-size: 14px;
 }
 
-/* 主内容区域 */
+/* ==================== 三、主内容区域 ==================== */
+
 .main-content {
   display: flex;
   flex: 1;
   overflow: hidden;
 }
 
-/* 侧边栏 */
+/* ==================== 四、侧边栏 ==================== */
+
 .sidebar {
   width: 240px;
   background-color: #F9FAFB;
@@ -168,7 +182,8 @@
   color: #6B7280;
 }
 
-/* 对话区域 */
+/* ==================== 五、对话区域 ==================== */
+
 .chat-area {
   flex: 1;
   display: flex;
@@ -276,7 +291,8 @@
   color: #6B7280 !important;
 }
 
-/* 文件面板 */
+/* ==================== 六、文件面板 ==================== */
+
 .file-panel {
   width: 260px;
   background-color: #F9FAFB;

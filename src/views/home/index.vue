@@ -1,10 +1,24 @@
+<!--
+  @description 首页视图
+  @author ByteSoul Team
+  @created 2024-01-15
+  
+  功能说明：
+  - 显示欢迎信息
+  - 显示最近打开的项目列表
+  - 提供打开文件夹、新建项目操作
+-->
+
 <template>
+  <!-- 一、页面容器 -->
   <div class="home-view">
+    <!-- 1、欢迎区域 -->
     <div class="welcome-section">
       <h1 class="title">ByteSoul Desktop</h1>
       <p class="subtitle">AI 代码助手</p>
     </div>
     
+    <!-- 2、最近项目列表 -->
     <div class="recent-projects">
       <h2 class="section-title">最近打开的项目</h2>
       <div class="project-list">
@@ -26,6 +40,7 @@
       </div>
     </div>
     
+    <!-- 3、操作按钮 -->
     <div class="actions">
       <Button label="打开文件夹" icon="pi pi-folder-open" @click="handleOpenFolder" />
       <Button label="新建项目" icon="pi pi-plus" severity="secondary" @click="handleNewProject" />
@@ -34,35 +49,48 @@
 </template>
 
 <script setup lang="ts">
+// ==================== 一、导入 ====================
+
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 
+// ==================== 二、类型定义 ====================
+
+// 1、项目接口
 interface Project {
   name: string
   path: string
   lastOpened: string
 }
 
+// ==================== 三、状态 ====================
+
 const router = useRouter()
 
+// 1、最近打开的项目列表
 const recentProjects = ref<Project[]>([
   { name: '项目 A', path: 'C:\\Projects\\project-a', lastOpened: '2024-01-15' },
   { name: '项目 B', path: 'D:\\Work\\project-b', lastOpened: '2024-01-14' },
   { name: '项目 C', path: 'E:\\Dev\\project-c', lastOpened: '2024-01-13' }
 ])
 
+// ==================== 四、方法 ====================
+
+// 1、打开项目
 const openProject = (project: Project) => {
   // TODO: 打开项目
   console.log('打开项目:', project)
   router.push('/chat')
 }
 
+// 2、打开文件夹对话框
 const handleOpenFolder = () => {
   // TODO: 打开文件夹对话框
   console.log('打开文件夹')
 }
 
+// 3、新建项目
 const handleNewProject = () => {
   // TODO: 新建项目
   console.log('新建项目')
@@ -70,6 +98,9 @@ const handleNewProject = () => {
 </script>
 
 <style scoped>
+/* ==================== 一、页面样式 ==================== */
+
+/* 1、页面容器 */
 .home-view {
   display: flex;
   flex-direction: column;
@@ -81,6 +112,7 @@ const handleNewProject = () => {
   color: #111827;
 }
 
+/* 2、欢迎区域 */
 .welcome-section {
   text-align: center;
   margin-bottom: 48px;
@@ -99,6 +131,7 @@ const handleNewProject = () => {
   color: #6B7280;
 }
 
+/* 3、最近项目区域 */
 .recent-projects {
   width: 100%;
   max-width: 800px;
@@ -164,12 +197,13 @@ const handleNewProject = () => {
   margin-top: 2px;
 }
 
+/* 4、操作按钮 */
 .actions {
   display: flex;
   gap: 12px;
 }
 
-/* 强制覆盖 PrimeVue 按钮样式 */
+/* 覆盖 PrimeVue 按钮样式 */
 :deep(.p-button) {
   background-color: #2563EB !important;
   border-color: #2563EB !important;

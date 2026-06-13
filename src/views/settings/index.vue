@@ -1,12 +1,26 @@
+<!--
+  @description 设置页视图
+  @author ByteSoul Team
+  @created 2024-01-15
+  
+  功能说明：
+  - 主题切换（暗色/亮色）
+  - pyAgent 连接配置
+  - 编辑器配置
+-->
+
 <template>
+  <!-- 一、页面容器 -->
   <div class="settings-view">
+    <!-- 1、页面头部 -->
     <div class="settings-header">
       <h1>设置</h1>
       <Button icon="pi pi-arrow-left" text @click="router.back()" />
     </div>
     
+    <!-- 2、设置内容 -->
     <div class="settings-content">
-      <!-- 主题设置 -->
+      <!-- 一、外观设置 -->
       <div class="settings-section">
         <h2>外观</h2>
         <div class="setting-item">
@@ -30,7 +44,7 @@
         </div>
       </div>
       
-      <!-- 模型设置 -->
+      <!-- 二、模型配置 -->
       <div class="settings-section">
         <h2>模型配置</h2>
         <div class="setting-item">
@@ -43,7 +57,7 @@
         </div>
       </div>
       
-      <!-- 编辑器设置 -->
+      <!-- 三、编辑器配置 -->
       <div class="settings-section">
         <h2>编辑器</h2>
         <div class="setting-item">
@@ -60,17 +74,26 @@
 </template>
 
 <script setup lang="ts">
+// ==================== 一、导入 ====================
+
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import { useConfigStore } from '@/stores/config'
 
+// ==================== 二、状态 ====================
+
+// 1、路由实例
 const router = useRouter()
+// 2、配置状态
 const configStore = useConfigStore()
 </script>
 
 <style scoped>
+/* ==================== 一、页面样式 ==================== */
+
+/* 1、页面容器 */
 .settings-view {
   padding: 48px;
   max-width: 800px;
@@ -80,6 +103,7 @@ const configStore = useConfigStore()
   min-height: 100vh;
 }
 
+/* 2、页面头部 */
 .settings-header {
   display: flex;
   align-items: center;
@@ -93,6 +117,7 @@ const configStore = useConfigStore()
   color: #111827;
 }
 
+/* 3、设置区块 */
 .settings-section {
   margin-bottom: 48px;
 }
@@ -106,6 +131,7 @@ const configStore = useConfigStore()
   color: #374151;
 }
 
+/* 4、设置项 */
 .setting-item {
   display: flex;
   align-items: center;
@@ -118,6 +144,7 @@ const configStore = useConfigStore()
   color: #374151;
 }
 
+/* 5、主题切换按钮 */
 .theme-toggle {
   display: flex;
   gap: 8px;
@@ -140,7 +167,7 @@ const configStore = useConfigStore()
   color: #FFFFFF !important;
 }
 
-/* 覆盖输入框样式 */
+/* 6、输入框样式 */
 :deep(.p-inputtext) {
   background-color: #FFFFFF !important;
   border-color: #D1D5DB !important;
