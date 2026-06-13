@@ -109,33 +109,27 @@
       <div class="chat-area">
         <!-- 1、消息列表 -->
         <div class="messages" ref="messagesContainer">
-          <!-- 空状态 - Codex 风格欢迎页 -->
-          <div v-if="messages.length === 0" class="welcome-page">
-            <div class="welcome-content">
-<div class="welcome-logo">
-  <i class="pi pi-code"></i>
-</div>
-<h1 class="welcome-title">ByteSoul</h1>
-<div class="welcome-suggestions">
-  <div class="suggestion-card" @click="sendMessage('知识上传')">
-    <i class="pi pi-upload"></i>
-    <span>知识上传</span>
-  </div>
-  <div class="suggestion-card" @click="sendMessage('RAG浏览')">
-    <i class="pi pi-search"></i>
-    <span>RAG浏览</span>
-  </div>
-  <div class="suggestion-card" @click="sendMessage('知识图谱')">
-    <i class="pi pi-sitemap"></i>
-    <span>知识图谱</span>
-  </div>
-  <div class="suggestion-card" @click="sendMessage('模型配置')">
-    <i class="pi pi-cog"></i>
-    <span>模型配置</span>
+<!-- 空状态 - Codex 风格欢迎页 -->
+<div v-if="messages.length === 0" class="welcome-page">
+  <div class="welcome-content animate__animated animate__fadeIn">
+    <div class="welcome-logo animate__animated animate__bounceIn">
+      <i class="pi pi-code"></i>
+    </div>
+    <h1 class="welcome-title animate__animated animate__fadeInUp">ByteSoul</h1>
+    <div class="welcome-suggestions">
+      <div
+        v-for="(item, index) in suggestions"
+        :key="item.text"
+        class="suggestion-card animate__animated animate__fadeInUp"
+        :style="{ animationDelay: `${index * 0.1 + 0.3}s` }"
+        @click="sendMessage(item.text)"
+      >
+        <i :class="item.icon"></i>
+        <span>{{ item.text }}</span>
+      </div>
+    </div>
   </div>
 </div>
-            </div>
-          </div>
           
           <!-- 消息列表 -->
           <div
@@ -206,6 +200,14 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
 import '@/assets/styles/chat.css'
+
+// 2、建议卡片数据
+const suggestions = [
+  { icon: 'pi pi-upload', text: '知识上传' },
+  { icon: 'pi pi-search', text: 'RAG浏览' },
+  { icon: 'pi pi-sitemap', text: '知识图谱' },
+  { icon: 'pi pi-cog', text: '模型配置' }
+]
 
 // ==================== 二、状态 ====================
 
