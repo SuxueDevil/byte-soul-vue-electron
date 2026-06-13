@@ -18,7 +18,7 @@ import FileTreeNode from '@/components/file/FileTreeNode.vue'
 // 1、项目标签页列表
 export const projectTabs = ref([
   { id: '1', name: '项目 A' },
-  { id: '2', name: '项目 B' })
+  { id: '2', name: '项目 B' }])
 // 2、当前激活的标签页
 export const activeTab = ref('1')
 
@@ -34,7 +34,7 @@ export const activePanel = ref('chat')
 // 1、会话列表
 export const sessions = ref([
   { id: '1', name: '新会话 1' },
-  { id: '2', name: '新会话 2' })
+  { id: '2', name: '新会话 2' }])
 // 2、当前激活的会话
 export const activeSession = ref('1')
 

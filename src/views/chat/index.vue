@@ -176,13 +176,14 @@ import { ref, reactive } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
+import '@/assets/styles/chat.css'
 
 // ==================== 二、状态 ====================
 
 // 1、标签页
 const projectTabs = ref([
   { id: '1', name: '项目 A' },
-  { id: '2', name: '项目 B' })
+  { id: '2', name: '项目 B' }])
 const activeTab = ref('1')
 
 // 2、侧边栏
@@ -192,7 +193,7 @@ const activePanel = ref('chat')
 // 3、会话
 const sessions = ref([
   { id: '1', name: '新会话 1' },
-  { id: '2', name: '新会话 2' })
+  { id: '2', name: '新会话 2' }])
 const activeSession = ref('1')
 
 // 4、消息
