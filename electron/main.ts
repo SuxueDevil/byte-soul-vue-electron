@@ -45,7 +45,8 @@ function createWindow() {
     minWidth: 1000,
     minHeight: 700,
     title: 'ByteSoul Desktop',
-    show: false,
+    show: true,
+    backgroundColor: '#F8FAFC',
     webPreferences: {
       preload: join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -68,15 +69,7 @@ function createWindow() {
     mainWindow.loadFile(join(__dirname, '../dist/index.html'))
   }
 
-  // 3、窗口事件 - 等待页面完全加载后再显示
-  mainWindow.webContents.on('did-finish-load', () => {
-    // 给 Vue 一点时间完成渲染
-    setTimeout(() => {
-      mainWindow?.show()
-      console.log('Window shown')
-    }, 200)
-  })
-
+  // 3、窗口事件
   mainWindow.on('closed', () => {
     mainWindow = null
   })
