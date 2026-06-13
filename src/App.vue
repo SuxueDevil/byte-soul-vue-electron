@@ -9,14 +9,8 @@
 -->
 
 <template>
-  <!-- 一、应用容器 -->
   <div class="app" :data-theme="theme">
-    <!-- 2、路由视图（带切换动画） -->
-    <router-view v-slot="{ Component }">
-      <transition name="page" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <router-view />
   </div>
 </template>
 
