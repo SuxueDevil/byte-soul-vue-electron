@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 export const useConfigStore = defineStore('config', () => {
   // 主题
-  const theme = ref<'dark' | 'light'>('dark')
+  const theme = ref<'dark' | 'light'>('light')
   
   // pyAgent 配置
   const pyAgentUrl = ref('http://localhost:8000')

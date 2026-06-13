@@ -13,11 +13,25 @@ const theme = computed(() => configStore.theme)
 </script>
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
 .app {
   width: 100vw;
   height: 100vh;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-ui);
+  background-color: #F8FAFC;
+  color: #0F172A;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+[data-theme="dark"] .app {
+  background-color: #0F172A;
+  color: #F8FAFC;
 }
 </style>
