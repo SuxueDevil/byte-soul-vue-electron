@@ -133,12 +133,13 @@
     </div>
 
     <!-- 上传对话框 -->
-    <Dialog v-model:visible="showUploadDialog" modal header="上传文档" :style="{ width: '500px' }">
+    <Dialog v-model:visible="showUploadDialog" modal header="上传文档" :style="{ width: '500px' }" :draggable="false">
       <div class="upload-content">
-        <div class="upload-area" @dragover.prevent @drop.prevent="handleDrop">
+        <div class="upload-area" @dragover.prevent @drop.prevent="handleDrop" @click="triggerFileInput">
           <i class="pi pi-cloud-upload"></i>
           <p>拖拽文件到此处或点击上传</p>
-          <input type="file" multiple @change="handleFileSelect" accept=".pdf,.md,.txt,.docx" />
+          <span class="upload-hint">支持 PDF、Markdown、TXT、Word 格式</span>
+          <input ref="fileInput" type="file" multiple @change="handleFileSelect" accept=".pdf,.md,.txt,.docx" style="display: none" />
         </div>
         <div class="upload-options">
           <div class="option-item">
@@ -213,10 +214,16 @@ const selectedDocs = ref<string[]>([])
 
 // 4、上传对话框
 const showUploadDialog = ref(false)
+const fileInput = ref<HTMLInputElement>()
 const uploadOptions = ref({
   chunkSize: 500,
   chunkOverlap: 50
 })
+
+// 5、触发文件选择
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
 
 // 5、检索预览
 const previewQuery = ref('')

@@ -10,10 +10,13 @@
 
 <template>
   <!-- 一、应用容器 -->
-  <!-- 1、根据主题设置 data-theme 属性 -->
   <div class="app" :data-theme="theme">
-    <!-- 2、路由视图 -->
-    <router-view />
+    <!-- 2、路由视图（带切换动画） -->
+    <router-view v-slot="{ Component }">
+      <transition name="page" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -61,5 +64,22 @@ html, body {
 [data-theme="dark"] .app {
   background-color: #0F172A;
   color: #F8FAFC;
+}
+
+/* ==================== 三、页面切换动画 ==================== */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
 }
 </style>
