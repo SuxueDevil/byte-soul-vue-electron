@@ -33,7 +33,12 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
+      '@api': resolve(__dirname, 'src/api'),
+      '@config': resolve(__dirname, 'src/config'),
+      '@constants': resolve(__dirname, 'src/constants'),
+      '@utils': resolve(__dirname, 'src/utils'),
+      '@types': resolve(__dirname, 'src/types')
     }
   },
   server: {
