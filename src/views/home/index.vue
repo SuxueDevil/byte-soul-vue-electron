@@ -171,6 +171,30 @@ const handleNewProject = () => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.project-card:active,
+.project-card.selected {
+  background-color: #111827;
+  border-color: #111827;
+  color: #FFFFFF;
+}
+
+.project-card:active .project-icon,
+.project-card.selected .project-icon {
+  color: #FFFFFF;
+}
+
+.project-card:active .project-name,
+.project-card.selected .project-name {
+  color: #FFFFFF;
+}
+
+.project-card:active .project-path,
+.project-card:active .project-date,
+.project-card.selected .project-path,
+.project-card.selected .project-date {
+  color: #D1D5DB;
+}
+
 .project-icon {
   font-size: 20px;
   color: #2563EB;
@@ -201,32 +225,5 @@ const handleNewProject = () => {
 .actions {
   display: flex;
   gap: 12px;
-}
-
-/* 覆盖 PrimeVue 按钮样式 */
-:deep(.p-button) {
-  background-color: #2563EB !important;
-  border-color: #2563EB !important;
-  color: #FFFFFF !important;
-  font-weight: 500 !important;
-  padding: 10px 20px !important;
-  font-size: 14px !important;
-  border-radius: 6px !important;
-}
-
-:deep(.p-button:hover) {
-  background-color: #1D4ED8 !important;
-  border-color: #1D4ED8 !important;
-}
-
-:deep(.p-button-secondary) {
-  background-color: #FFFFFF !important;
-  border-color: #D1D5DB !important;
-  color: #374151 !important;
-}
-
-:deep(.p-button-secondary:hover) {
-  background-color: #F9FAFB !important;
-  border-color: #9CA3AF !important;
 }
 </style>

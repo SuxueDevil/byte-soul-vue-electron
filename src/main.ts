@@ -12,8 +12,8 @@ import router from './router'
 
 // ==================== 一、样式导入 ====================
 
-// 1、PrimeVue 组件库样式（亮色主题）
-import 'primevue/resources/themes/lara-light-blue/theme.css'
+// 1、PrimeVue 组件库样式（Aura 亮色主题）
+import 'primevue/resources/themes/aura-light-noir/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
