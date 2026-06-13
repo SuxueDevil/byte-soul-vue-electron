@@ -220,14 +220,14 @@
                     <label>Top K</label>
                     <p class="config-desc">返回最相关的 K 个文档片段</p>
                   </div>
-                  <InputNumber v-model="ragConfig.topK" :min="1" :max="20" />
+                  <InputNumber v-model="ragConfig.topK" :min="1" :max="20" style="width: 90px" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>相似度阈值</label>
                     <p class="config-desc">低于阈值的结果将被过滤</p>
                   </div>
-                  <InputNumber v-model="ragConfig.scoreThreshold" :min="0" :max="1" :step="0.1" />
+                  <InputNumber v-model="ragConfig.scoreThreshold" :min="0" :max="1" :step="0.1" style="width: 90px" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
