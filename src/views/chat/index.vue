@@ -231,6 +231,7 @@
 // ==================== 一、导入 ====================
 
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
@@ -245,6 +246,8 @@ const suggestions = [
 ]
 
 // ==================== 二、状态 ====================
+
+const router = useRouter()
 
 // 1、标签页
 const projectTabs = ref([])
