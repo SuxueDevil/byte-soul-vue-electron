@@ -1,0 +1,307 @@
+/**
+ * @description RAG 知识库页面样式
+ * @author ByteSoul Team
+ * @created 2024-01-15
+ */
+
+/* ==================== 一、页面样式 ==================== */
+
+.rag-view {
+  padding: 24px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--surface-ground);
+}
+
+/* ==================== 二、页面头部 ==================== */
+
+.rag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rag-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* ==================== 三、统计卡片 ==================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background-color: var(--surface-card);
+  border-radius: 12px;
+  border: 1px solid var(--surface-border);
+}
+
+.stat-card i {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-color-secondary);
+  margin-top: 4px;
+}
+
+/* ==================== 四、主要内容区域 ==================== */
+
+.rag-content {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 24px;
+}
+
+/* ==================== 五、配置面板 ==================== */
+
+.config-panel {
+  background-color: var(--surface-card);
+  border-radius: 12px;
+  border: 1px solid var(--surface-border);
+  padding: 24px;
+}
+
+.config-panel h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.config-section {
+  margin-bottom: 24px;
+}
+
+.config-item {
+  margin-bottom: 16px;
+}
+
+.config-item label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.config-desc {
+  font-size: 12px;
+  color: var(--text-color-secondary);
+  margin-bottom: 8px;
+}
+
+/* ==================== 六、检索预览 ==================== */
+
+.retrieval-preview {
+  padding-top: 20px;
+  border-top: 1px solid var(--surface-border);
+}
+
+.retrieval-preview h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.preview-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.preview-input input {
+  flex: 1;
+}
+
+.preview-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--surface-ground);
+  border-radius: 8px;
+}
+
+.preview-score {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 50px;
+}
+
+.preview-content {
+  font-size: 13px;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* ==================== 七、文档面板 ==================== */
+
+.document-panel {
+  background-color: var(--surface-card);
+  border-radius: 12px;
+  border: 1px solid var(--surface-border);
+  padding: 24px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.panel-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--surface-ground);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.document-item:hover {
+  background-color: var(--surface-hover);
+}
+
+.document-item.selected {
+  background-color: var(--primary-color);
+  background-opacity: 0.1;
+}
+
+.doc-icon {
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
+.doc-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.doc-meta {
+  font-size: 12px;
+  color: var(--text-color-secondary);
+  margin-top: 2px;
+}
+
+.doc-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* ==================== 八、上传对话框 ==================== */
+
+.upload-content {
+  padding: 16px 0;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  border: 2px dashed var(--surface-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  margin-bottom: 24px;
+}
+
+.upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: var(--surface-ground);
+}
+
+.upload-area i {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.upload-area p {
+  font-size: 14px;
+  color: var(--text-color-secondary);
+}
+
+.upload-area input {
+  display: none;
+}
+
+.upload-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.option-item label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}

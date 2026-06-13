@@ -28,11 +28,11 @@
         <i class="pi pi-comments"></i>
         <span v-if="!sidebarCollapsed">对话</span>
       </div>
-      <!-- 2、知识库导航 -->
-      <div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="activePanel = 'knowledge'">
-        <i class="pi pi-book"></i>
-        <span v-if="!sidebarCollapsed">知识库</span>
-      </div>
+<!-- 2、知识库导航 -->
+<div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="goToRAG">
+  <i class="pi pi-book"></i>
+  <span v-if="!sidebarCollapsed">知识库</span>
+</div>
 <!-- 3、插件导航 -->
 <div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="activePanel = 'plugins'">
   <i class="pi pi-box"></i>
@@ -351,6 +351,11 @@ const uploadDocument = () => {
 // 8、删除文档
 const deleteDocument = (id: string) => {
   documents.value = documents.value.filter(doc => doc.id !== id)
+}
+
+// 9、跳转到 RAG 页面
+const goToRAG = () => {
+  router.push('/rag')
 }
 </script>
 
