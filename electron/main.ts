@@ -18,8 +18,8 @@ function createWindow() {
     minWidth: 1000,
     minHeight: 700,
     title: 'ByteSoul Desktop',
-    show: false,
-    backgroundColor: '#F8FAFC',
+    show: true,
+    backgroundColor: '#FFFFFF',
     webPreferences: {
       preload: join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -33,23 +33,17 @@ function createWindow() {
     const devUrl = process.env.VITE_DEV_SERVER_URL || 'http://localhost:3000'
     console.log('Loading:', devUrl)
     
-    // 加载页面
-    mainWindow.loadURL(devUrl)
-    mainWindow.webContents.openDevTools()
+    // 先加载一个简单的 loading 页面
+    mainWindow.loadURL('data:text/html,<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:sans-serif"><h1>Loading ByteSoul...</h1></body></html>')
     
-    // 等待 dom-ready 后再延迟显示，确保 Vue 渲染完成
-    mainWindow.webContents.once('dom-ready', () => {
-      console.log('DOM ready, waiting for Vue...')
-      setTimeout(() => {
-        console.log('Showing window')
-        mainWindow?.show()
-      }, 2000)
-    })
+    // 延迟加载实际页面
+    setTimeout(() => {
+      console.log('Loading actual app...')
+      mainWindow?.loadURL(devUrl)
+      mainWindow?.webContents.openDevTools()
+    }, 2000)
   } else {
     mainWindow.loadFile(join(__dirname, '../dist/index.html'))
-    mainWindow.once('ready-to-show', () => {
-      mainWindow?.show()
-    })
   }
 
   mainWindow.on('closed', () => {
