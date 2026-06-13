@@ -13,27 +13,7 @@
 <template>
   <!-- 一、页面容器 -->
   <div class="chat-view">
-    <!-- 1、顶部标签栏 -->
-    <div class="tab-bar">
-      <div class="tabs">
-        <div
-          v-for="tab in projectTabs"
-          :key="tab.id"
-          class="tab"
-          :class="{ active: tab.id === activeTab }"
-          @click="activeTab = tab.id"
-        >
-          <span class="tab-name">{{ tab.name }}</span>
-          <i class="pi pi-times tab-close" @click.stop="closeTab(tab.id)"></i>
-        </div>
-        <div class="tab add-tab" @click="addTab">
-          <i class="pi pi-plus"></i>
-        </div>
-      </div>
-      <div class="app-title">ByteSoul</div>
-    </div>
-    
-    <!-- 2、主内容区域 -->
+    <!-- 1、主内容区域 -->
     <div class="main-content">
       <!-- 一、左侧配置面板 -->
       <div class="sidebar" :class="{ collapsed: sidebarCollapsed }">
