@@ -59,14 +59,18 @@ function createWindow() {
   
   if (isDev) {
     // 开发环境：等待 Vite 服务器就绪后加载
-    const devUrl = getViteDevServerUrl()
-    console.log('Waiting for dev server:', devUrl)
+    // vite-plugin-electron 会注入正确的 URL
+    const devUrl = process.env.VITE_DEV_SERVER_URL || 'http://localhost:3000'
+    console.log('Loading dev server:', devUrl)
     
     // 延迟加载，等待 Vite 编译完成
     setTimeout(() => {
-      mainWindow?.loadURL(devUrl)
-      console.log('Loaded dev server')
-    }, 1000)
+      mainWindow?.loadURL(devUrl).catch(err => {
+        console.error('Failed to load:', err)
+        // 重试
+        setTimeout(() => mainWindow?.loadURL(devUrl), 2000)
+      })
+    }, 1500)
     
     mainWindow.webContents.openDevTools()
   } else {
