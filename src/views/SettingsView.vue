@@ -72,53 +72,93 @@ const configStore = useConfigStore()
 
 <style scoped>
 .settings-view {
-  padding: var(--spacing-2xl);
+  padding: 48px;
   max-width: 800px;
   margin: 0 auto;
+  background-color: #FFFFFF;
+  color: #111827;
+  min-height: 100vh;
 }
 
 .settings-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 48px;
 }
 
 .settings-header h1 {
   font-size: 32px;
   font-weight: 700;
+  color: #111827;
 }
 
 .settings-section {
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 48px;
 }
 
 .settings-section h2 {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: var(--spacing-lg);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--color-secondary);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E5E7EB;
+  color: #374151;
 }
 
 .setting-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-md) 0;
+  padding: 16px 0;
 }
 
 .setting-item label {
   font-weight: 500;
+  color: #374151;
 }
 
 .theme-toggle {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 8px;
 }
 
-.theme-toggle .active {
-  background-color: var(--color-cta);
-  color: #000;
+.theme-toggle :deep(.p-button) {
+  background-color: #F3F4F6 !important;
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+}
+
+.theme-toggle :deep(.p-button:hover) {
+  background-color: #E5E7EB !important;
+  border-color: #9CA3AF !important;
+}
+
+.theme-toggle :deep(.p-button.active) {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+/* 覆盖输入框样式 */
+:deep(.p-inputtext) {
+  background-color: #FFFFFF !important;
+  border-color: #D1D5DB !important;
+  color: #111827 !important;
+}
+
+:deep(.p-inputtext:focus) {
+  border-color: #2563EB !important;
+  box-shadow: 0 0 0 1px #2563EB !important;
+}
+
+:deep(.p-inputnumber) {
+  background-color: #FFFFFF !important;
+  border-color: #D1D5DB !important;
+}
+
+:deep(.p-inputnumber:focus-within) {
+  border-color: #2563EB !important;
+  box-shadow: 0 0 0 1px #2563EB !important;
 }
 </style>
