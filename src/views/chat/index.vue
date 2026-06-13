@@ -115,26 +115,25 @@
 <div class="welcome-logo">
   <i class="pi pi-code"></i>
 </div>
-              <h1 class="welcome-title">ByteSoul</h1>
-              <p class="welcome-subtitle">AI 代码助手</p>
-              <div class="welcome-suggestions">
-                <div class="suggestion-card" @click="sendMessage('帮我写一个 React 组件')">
-                  <i class="pi pi-code"></i>
-                  <span>帮我写一个 React 组件</span>
-                </div>
-                <div class="suggestion-card" @click="sendMessage('解释一下这段代码')">
-                  <i class="pi pi-info-circle"></i>
-                  <span>解释一下这段代码</span>
-                </div>
-                <div class="suggestion-card" @click="sendMessage('优化这段代码的性能')">
-                  <i class="pi pi-bolt"></i>
-                  <span>优化这段代码的性能</span>
-                </div>
-                <div class="suggestion-card" @click="sendMessage('帮我写单元测试')">
-                  <i class="pi pi-check-circle"></i>
-                  <span>帮我写单元测试</span>
-                </div>
-              </div>
+<h1 class="welcome-title">ByteSoul</h1>
+<div class="welcome-suggestions">
+  <div class="suggestion-card" @click="sendMessage('知识上传')">
+    <i class="pi pi-upload"></i>
+    <span>知识上传</span>
+  </div>
+  <div class="suggestion-card" @click="sendMessage('RAG浏览')">
+    <i class="pi pi-search"></i>
+    <span>RAG浏览</span>
+  </div>
+  <div class="suggestion-card" @click="sendMessage('知识图谱')">
+    <i class="pi pi-sitemap"></i>
+    <span>知识图谱</span>
+  </div>
+  <div class="suggestion-card" @click="sendMessage('模型配置')">
+    <i class="pi pi-cog"></i>
+    <span>模型配置</span>
+  </div>
+</div>
             </div>
           </div>
           
