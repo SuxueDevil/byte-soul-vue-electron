@@ -7,14 +7,50 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
+import Aura from '@primeuix/themes/aura'
+import { definePreset } from '@primeuix/themes'
+
+const Noir = definePreset(Aura, {
+  semantic: {
+    primary: {
+      50: '{neutral.50}',
+      100: '{neutral.100}',
+      200: '{neutral.200}',
+      300: '{neutral.300}',
+      400: '{neutral.400}',
+      500: '{neutral.500}',
+      600: '{neutral.600}',
+      700: '{neutral.700}',
+      800: '{neutral.800}',
+      900: '{neutral.900}',
+      950: '{neutral.950}'
+    },
+    colorScheme: {
+      light: {
+        surface: {
+          0: '{neutral.0}',
+          50: '{neutral.50}',
+          100: '{neutral.100}',
+          200: '{neutral.200}',
+          300: '{neutral.300}',
+          400: '{neutral.400}',
+          500: '{neutral.500}',
+          600: '{neutral.600}',
+          700: '{neutral.700}',
+          800: '{neutral.800}',
+          900: '{neutral.900}',
+          950: '{neutral.950}'
+        }
+      }
+    }
+  }
+})
 import App from './App.vue'
 import router from './router'
 
 // ==================== 一、样式导入 ====================
 
-// 1、PrimeVue 组件库样式（Aura 亮色主题 - 官网默认）
-import 'primevue/resources/themes/aura-light-noir/theme.css'
-import 'primevue/resources/primevue.min.css'
+// 1、PrimeVue 图标样式
 import 'primeicons/primeicons.css'
 
 // 2、全局自定义样式
@@ -29,8 +65,15 @@ const app = createApp(App)
 app.use(createPinia())  // 状态管理
 app.use(router)         // 路由
 app.use(PrimeVue, {     // UI 组件库
-  ripple: false,        // 禁用水波纹效果
-  inputStyle: 'outlined' // 输入框样式
+  theme: {
+    preset: Noir,
+    options: {
+      prefix: 'p',
+      darkModeSelector: '[data-theme="dark"]',
+      cssLayer: false
+    }
+  },
+  ripple: false
 })
 
 // 3、挂载到 DOM

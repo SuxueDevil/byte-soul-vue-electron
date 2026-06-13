@@ -163,7 +163,7 @@
               <div class="input-actions">
                 <Button icon="pi pi-paperclip" text @click="attachFile" />
                 <Button icon="pi pi-image" text @click="attachImage" />
-                <Button icon="pi pi-send" @click="sendMessage" :disabled="!inputText.trim()" />
+                <Button icon="pi pi-send" :text="!inputText.trim()" :severity="inputText.trim() ? 'contrast' : undefined" @click="sendMessage" :disabled="!inputText.trim()" />
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@
             <!-- 头部 -->
             <div class="rag-header">
               <h2>RAG 知识库</h2>
-              <Button label="上传文档" icon="pi pi-upload" @click="showUploadDialog = true" />
+              <Button label="上传文档" icon="pi pi-upload" outlined raised @click="showUploadDialog = true" />
             </div>
             
             <!-- 统计卡片 -->
@@ -220,49 +220,66 @@
                     <label>Top K</label>
                     <p class="config-desc">返回最相关的 K 个文档片段</p>
                   </div>
-                  <InputNumber v-model="ragConfig.topK" :min="1" :max="20" style="width: 90px" />
+                  <InputNumber v-model="ragConfig.topK" :min="1" inputClass="w-full" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>相似度阈值</label>
                     <p class="config-desc">低于阈值的结果将被过滤</p>
                   </div>
-                  <InputNumber v-model="ragConfig.scoreThreshold" :min="0" :max="1" :step="0.1" style="width: 90px" />
+                  <div class="threshold-row">
+                    <Slider
+                      v-model="ragConfig.scoreThreshold"
+                      class="threshold-slider"
+                      :min="0"
+                      :max="1"
+                      :step="0.01"
+                    />
+                    <InputNumber
+                      v-model="ragConfig.scoreThreshold"
+                      class="threshold-number"
+                      :min="0"
+                      :max="1"
+                      :step="0.01"
+                      :minFractionDigits="2"
+                      :maxFractionDigits="2"
+                    />
+                  </div>
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>向量检索</label>
                     <p class="config-desc">基于语义相似度的检索</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableVector" onLabel="" offLabel="" />
+                  <ToggleSwitch v-model="ragConfig.enableVector" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>BM25 检索</label>
                     <p class="config-desc">基于关键词匹配的检索</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableBM25" onLabel="" offLabel="" />
+                  <ToggleSwitch v-model="ragConfig.enableBM25" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>重排序</label>
                     <p class="config-desc">使用 Cross-Encoder 重新排序</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableReranker" onLabel="" offLabel="" />
+                  <ToggleSwitch v-model="ragConfig.enableReranker" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>查询改写</label>
                     <p class="config-desc">优化检索词提升召回率</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableRewrite" onLabel="" offLabel="" />
+                  <ToggleSwitch v-model="ragConfig.enableRewrite" />
                 </div>
                 <div class="config-item">
                   <div class="config-item-left">
                     <label>查询扩展</label>
                     <p class="config-desc">生成多个相关查询扩大召回</p>
                   </div>
-                  <ToggleButton v-model="ragConfig.enableExpansion" onLabel="" offLabel="" />
+                  <ToggleSwitch v-model="ragConfig.enableExpansion" />
                 </div>
               </div>
               
@@ -322,14 +339,17 @@
 <script setup lang="ts">
 // ==================== 一、导入 ====================
 
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import ToggleButton from 'primevue/togglebutton'
+import Slider from 'primevue/slider'
+import ToggleSwitch from 'primevue/toggleswitch'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
 import '@/assets/styles/chat.css'
+
+const RAG_CONFIG_STORAGE_KEY = 'chat.ragConfig'
 
 // 2、建议卡片数据
 const suggestions = [
@@ -352,11 +372,11 @@ const sidebarCollapsed = ref(false)
 const activePanel = ref('chat')
 
 // 3、会话
-const sessions = ref([])
+const sessions = ref<{ id: string; name: string }[]>([])
 const activeSession = ref('')
 
 // 4、消息
-const messages = ref([])
+const messages = ref<{ id: string; role: string; content: string; timestamp: string }[]>([])
 
 // 5、输入
 const inputText = ref('')
@@ -380,13 +400,13 @@ const fileTree = ref([
 ])
 
 // 7、知识库
-const documents = ref([
+const documents = ref<{ id: string; name: string; size: string; chunks: number }[]>([
   { id: '1', name: '项目文档.pdf', size: '2.4 MB', chunks: 156 },
   { id: '2', name: 'API 说明.md', size: '156 KB', chunks: 45 }
 ])
 
 // 8、RAG 配置
-const ragConfig = ref({
+const defaultRagConfig = () => ({
   topK: 5,
   scoreThreshold: 0.7,
   enableVector: true,
@@ -395,6 +415,30 @@ const ragConfig = ref({
   enableRewrite: true,
   enableExpansion: true
 })
+
+const ragConfig = ref(defaultRagConfig())
+
+onMounted(() => {
+  try {
+    const raw = localStorage.getItem(RAG_CONFIG_STORAGE_KEY)
+    if (!raw) return
+    ragConfig.value = { ...defaultRagConfig(), ...JSON.parse(raw) }
+  } catch (e) {
+    console.warn('读取 RAG 配置失败:', e)
+  }
+})
+
+watch(
+  ragConfig,
+  (val) => {
+    try {
+      localStorage.setItem(RAG_CONFIG_STORAGE_KEY, JSON.stringify(val))
+    } catch (e) {
+      console.warn('保存 RAG 配置失败:', e)
+    }
+  },
+  { deep: true }
+)
 
 // 9、上传对话框
 const showUploadDialog = ref(false)
