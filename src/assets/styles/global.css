@@ -87,7 +87,24 @@ html, body {
 
 /* ==================== 五、PrimeVue 主题覆盖 ==================== */
 
-/* 保留默认主题样式 */
+/* 1、按钮点击效果 */
+.p-button:active {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #FFFFFF !important;
+  transform: scale(0.98);
+}
+
+.p-button-secondary:active {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* 2、过渡效果 */
+.p-button {
+  transition: all 150ms ease !important;
+}
 
 /* ==================== 六、滚动条样式 ==================== */
 
