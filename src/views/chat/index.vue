@@ -29,7 +29,7 @@
         <span v-if="!sidebarCollapsed">对话</span>
       </div>
 <!-- 2、知识库导航 -->
-<div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="goToRAG">
+<div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="activePanel = 'knowledge'">
   <i class="pi pi-book"></i>
   <span v-if="!sidebarCollapsed">知识库</span>
 </div>
@@ -110,62 +110,153 @@
   </div>
 </div>
       
-      <!-- 三、对话区域 -->
+      <!-- 三、中间内容区域 -->
       <div class="chat-area">
-        <!-- 1、消息列表 -->
-        <div class="messages" ref="messagesContainer">
-<!-- 空状态 - Codex 风格欢迎页 -->
-<div v-if="messages.length === 0" class="welcome-page">
-<div class="welcome-content animate__animated animate__fadeIn" style="animation-duration: 0.3s">
-  <h1 class="welcome-title animate__animated animate__fadeInUp" style="animation-duration: 0.3s">ByteSoul</h1>
-    <div class="welcome-suggestions">
-<div
-  v-for="(item, index) in suggestions"
-  :key="item.text"
-  class="suggestion-card animate__animated animate__fadeInUp"
-  :style="{ animationDelay: `${index * 0.05 + 0.1}s`, animationDuration: '0.3s' }"
-  @click="sendMessage(item.text)"
->
-        <i :class="item.icon"></i>
-        <span>{{ item.text }}</span>
-      </div>
-    </div>
-  </div>
-</div>
+        <!-- 对话模式 -->
+        <template v-if="activePanel === 'chat'">
+          <!-- 1、消息列表 -->
+          <div class="messages" ref="messagesContainer">
+            <!-- 空状态 - 欢迎页 -->
+            <div v-if="messages.length === 0" class="welcome-page">
+              <div class="welcome-content">
+                <h1 class="welcome-title">ByteSoul</h1>
+                <div class="welcome-suggestions">
+                  <div
+                    v-for="(item, index) in suggestions"
+                    :key="item.text"
+                    class="suggestion-card"
+                    @click="sendMessage(item.text)"
+                  >
+                    <i :class="item.icon"></i>
+                    <span>{{ item.text }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 消息列表 -->
+            <div
+              v-for="message in messages"
+              :key="message.id"
+              class="message"
+              :class="message.role"
+            >
+              <div class="message-avatar">
+                <i :class="message.role === 'user' ? 'pi pi-user' : 'pi pi-android'"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-text" v-html="message.content"></div>
+                <div class="message-time">{{ message.timestamp }}</div>
+              </div>
+            </div>
+          </div>
           
-          <!-- 消息列表 -->
-          <div
-            v-for="message in messages"
-            :key="message.id"
-            class="message"
-            :class="message.role"
-          >
-            <div class="message-avatar">
-              <i :class="message.role === 'user' ? 'pi pi-user' : 'pi pi-android'"></i>
-            </div>
-            <div class="message-content">
-              <div class="message-text" v-html="message.content"></div>
-              <div class="message-time">{{ message.timestamp }}</div>
+          <!-- 2、输入区域 -->
+          <div class="input-area">
+            <div class="input-wrapper">
+              <textarea
+                v-model="inputText"
+                class="message-input"
+                placeholder="输入消息... (Ctrl+Enter 发送)"
+                @keydown.ctrl.enter="sendMessage"
+              ></textarea>
+              <div class="input-actions">
+                <Button icon="pi pi-paperclip" text @click="attachFile" />
+                <Button icon="pi pi-image" text @click="attachImage" />
+                <Button icon="pi pi-send" @click="sendMessage" :disabled="!inputText.trim()" />
+              </div>
             </div>
           </div>
-        </div>
+        </template>
         
-        <!-- 2、输入区域 -->
-        <div class="input-area">
-          <div class="input-wrapper">
-            <textarea
-              v-model="inputText"
-              class="message-input"
-              placeholder="输入消息... (Ctrl+Enter 发送)"
-              @keydown.ctrl.enter="sendMessage"
-            ></textarea>
-            <div class="input-actions">
-              <Button icon="pi pi-paperclip" text @click="attachFile" />
-              <Button icon="pi pi-image" text @click="attachImage" />
-              <Button icon="pi pi-send" @click="sendMessage" :disabled="!inputText.trim()" />
+        <!-- RAG 知识库模式 -->
+        <template v-else-if="activePanel === 'knowledge'">
+          <div class="rag-panel">
+            <!-- 头部 -->
+            <div class="rag-header">
+              <h2>RAG 知识库</h2>
+              <Button label="上传文档" icon="pi pi-upload" @click="showUploadDialog = true" />
+            </div>
+            
+            <!-- 统计卡片 -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <i class="pi pi-file"></i>
+                <div class="stat-info">
+                  <span class="stat-value">{{ documents.length }}</span>
+                  <span class="stat-label">文档总数</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <i class="pi pi-database"></i>
+                <div class="stat-info">
+                  <span class="stat-value">{{ totalChunks }}</span>
+                  <span class="stat-label">分块总数</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <i class="pi pi-chart-line"></i>
+                <div class="stat-info">
+                  <span class="stat-value">{{ ragConfig.topK }}</span>
+                  <span class="stat-label">召回数量</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <i class="pi pi-bolt"></i>
+                <div class="stat-info">
+                  <span class="stat-value">{{ ragConfig.enableRerank ? '开' : '关' }}</span>
+                  <span class="stat-label">重排序</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 配置和文档列表 -->
+            <div class="rag-content">
+              <!-- 左侧：检索配置 -->
+              <div class="config-panel">
+                <h3>检索配置</h3>
+                <div class="config-item">
+                  <label>Top K</label>
+                  <p class="config-desc">返回最相关的 K 个文档片段</p>
+                  <InputNumber v-model="ragConfig.topK" :min="1" :max="20" />
+                </div>
+                <div class="config-item">
+                  <label>相似度阈值</label>
+                  <p class="config-desc">低于阈值的结果将被过滤</p>
+                  <InputNumber v-model="ragConfig.threshold" :min="0" :max="1" :step="0.1" />
+                </div>
+                <div class="config-item">
+                  <label>启用重排序</label>
+                  <p class="config-desc">使用 Cross-Encoder 重新排序</p>
+                  <ToggleButton v-model="ragConfig.enableRerank" />
+                </div>
+              </div>
+              
+              <!-- 右侧：文档列表 -->
+              <div class="document-panel">
+                <h3>文档列表</h3>
+                <div class="document-list">
+                  <div v-for="doc in documents" :key="doc.id" class="document-item">
+                    <i class="pi pi-file"></i>
+                    <div class="doc-info">
+                      <span class="doc-name">{{ doc.name }}</span>
+                      <span class="doc-meta">{{ doc.size }} · {{ doc.chunks }} 个分块</span>
+                    </div>
+                    <Button icon="pi pi-trash" text severity="danger" @click="deleteDocument(doc.id)" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
+        
+        <!-- 其他面板（插件、设置） -->
+        <template v-else>
+          <div class="empty-panel">
+            <i class="pi pi-cog"></i>
+            <p>{{ activePanel === 'plugins' ? '插件功能开发中' : '设置功能开发中' }}</p>
+          </div>
+        </template>
       </div>
       
       <!-- 四、文件树面板 -->
@@ -197,10 +288,12 @@
 <script setup lang="ts">
 // ==================== 一、导入 ====================
 
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
+import ToggleButton from 'primevue/togglebutton'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
 import '@/assets/styles/chat.css'
 
@@ -254,9 +347,24 @@ const fileTree = ref([
 
 // 7、知识库
 const documents = ref([
-  { id: '1', name: '项目文档.pdf', size: '2.4 MB' },
-  { id: '2', name: 'API 说明.md', size: '156 KB' }
+  { id: '1', name: '项目文档.pdf', size: '2.4 MB', chunks: 156 },
+  { id: '2', name: 'API 说明.md', size: '156 KB', chunks: 45 }
 ])
+
+// 8、RAG 配置
+const ragConfig = ref({
+  topK: 5,
+  threshold: 0.7,
+  enableRerank: true
+})
+
+// 9、上传对话框
+const showUploadDialog = ref(false)
+
+// 10、总分块数
+const totalChunks = computed(() => {
+  return documents.value.reduce((sum, doc) => sum + doc.chunks, 0)
+})
 
 // ==================== 三、方法 ====================
 
@@ -305,15 +413,10 @@ const attachImage = () => {
 
 // 7、上传文档
 const uploadDocument = () => {
-  // TODO: 上传文档
+  showUploadDialog.value = true
 }
 
-// 8、跳转到 RAG 页面
-const goToRAG = () => {
-  router.push('/rag')
-}
-
-// 9、删除文档
+// 8、删除文档
 const deleteDocument = (id: string) => {
   documents.value = documents.value.filter(doc => doc.id !== id)
 }
