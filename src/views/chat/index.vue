@@ -115,19 +115,19 @@
         <div class="messages" ref="messagesContainer">
 <!-- 空状态 - Codex 风格欢迎页 -->
 <div v-if="messages.length === 0" class="welcome-page">
-  <div class="welcome-content animate__animated animate__fadeIn">
-    <div class="welcome-logo animate__animated animate__bounceIn">
-      <i class="pi pi-code"></i>
-    </div>
-    <h1 class="welcome-title animate__animated animate__fadeInUp">ByteSoul</h1>
+<div class="welcome-content animate__animated animate__fadeIn" style="animation-duration: 0.3s">
+  <div class="welcome-logo animate__animated animate__bounceIn" style="animation-duration: 0.4s">
+    <i class="pi pi-code"></i>
+  </div>
+  <h1 class="welcome-title animate__animated animate__fadeInUp" style="animation-duration: 0.3s">ByteSoul</h1>
     <div class="welcome-suggestions">
-      <div
-        v-for="(item, index) in suggestions"
-        :key="item.text"
-        class="suggestion-card animate__animated animate__fadeInUp"
-        :style="{ animationDelay: `${index * 0.1 + 0.3}s` }"
-        @click="sendMessage(item.text)"
-      >
+<div
+  v-for="(item, index) in suggestions"
+  :key="item.text"
+  class="suggestion-card animate__animated animate__fadeInUp"
+  :style="{ animationDelay: `${index * 0.05 + 0.1}s`, animationDuration: '0.3s' }"
+  @click="sendMessage(item.text)"
+>
         <i :class="item.icon"></i>
         <span>{{ item.text }}</span>
       </div>
@@ -171,14 +171,14 @@
       </div>
       
       <!-- 四、文件树面板 -->
-      <div class="file-panel">
+      <div class="file-panel" :class="{ collapsed: filePanelCollapsed }">
         <div class="file-header">
-          <h3>文件浏览器</h3>
-          <Button icon="pi pi-search" text @click="showSearch = !showSearch" />
+          <h3 v-if="!filePanelCollapsed">文件浏览器</h3>
+          <Button :icon="filePanelCollapsed ? 'pi pi-chevron-left' : 'pi pi-chevron-right'" text @click="filePanelCollapsed = !filePanelCollapsed" />
         </div>
         
         <!-- 1、搜索框 -->
-        <div v-if="showSearch" class="file-search">
+        <div v-if="showSearch && !filePanelCollapsed" class="file-search">
           <InputText v-model="searchQuery" placeholder="搜索文件..." />
         </div>
         
@@ -237,6 +237,7 @@ const messagesContainer = ref<HTMLElement>()
 // 6、文件树
 const showSearch = ref(false)
 const searchQuery = ref('')
+const filePanelCollapsed = ref(false)
 const fileTree = ref([
   {
     name: 'src',

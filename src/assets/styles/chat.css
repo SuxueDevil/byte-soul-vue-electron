@@ -361,6 +361,11 @@
   display: flex;
   flex-direction: column;
   background-color: var(--surface-ground);
+  transition: width 200ms ease;
+}
+
+.file-panel.collapsed {
+  width: 48px;
 }
 
 .file-header {
