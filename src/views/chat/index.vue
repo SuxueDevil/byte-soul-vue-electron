@@ -204,7 +204,7 @@
               <div class="stat-card">
                 <i class="pi pi-bolt"></i>
                 <div class="stat-info">
-                  <span class="stat-value">{{ ragConfig.enableRerank ? '开' : '关' }}</span>
+                  <span class="stat-value">{{ ragConfig.enableReranker ? '开' : '关' }}</span>
                   <span class="stat-label">重排序</span>
                 </div>
               </div>

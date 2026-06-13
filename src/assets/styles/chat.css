@@ -590,7 +590,12 @@
 
 .config-item :deep(.p-inputnumber) {
   flex-shrink: 0;
-  width: 100px;
+  width: 90px;
+}
+
+/* ToggleButton 隐藏文字 */
+.config-item :deep(.p-toggleswitch-label) {
+  display: none;
 }
 
 .document-list {
