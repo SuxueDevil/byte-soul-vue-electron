@@ -15,69 +15,93 @@
   <div class="chat-view">
     <!-- 1、主内容区域 -->
     <div class="main-content">
-      <!-- 一、左侧配置面板 -->
-      <div class="sidebar" :class="{ collapsed: sidebarCollapsed }">
-        <div class="sidebar-header">
-          <div class="nav-items">
-            <!-- 1、对话导航 -->
-            <div class="nav-item active" @click="activePanel = 'chat'">
-              <i class="pi pi-comments"></i>
-              <span v-if="!sidebarCollapsed">对话</span>
-            </div>
-            <!-- 2、知识库导航 -->
-            <div class="nav-item" @click="activePanel = 'knowledge'">
-              <i class="pi pi-book"></i>
-              <span v-if="!sidebarCollapsed">知识库</span>
-            </div>
-            <!-- 3、插件导航 -->
-            <div class="nav-item" @click="activePanel = 'plugins'">
-              <i class="pi pi-puzzle-piece"></i>
-              <span v-if="!sidebarCollapsed">插件</span>
-            </div>
-            <!-- 4、设置导航 -->
-            <div class="nav-item" @click="activePanel = 'settings'">
-              <i class="pi pi-cog"></i>
-              <span v-if="!sidebarCollapsed">设置</span>
-            </div>
+<!-- 一、左侧配置面板 -->
+<div class="sidebar" :class="{ collapsed: sidebarCollapsed }">
+  <div class="sidebar-header">
+    <div class="nav-items">
+      <!-- 1、对话导航 -->
+      <div class="nav-item" :class="{ active: activePanel === 'chat' }" @click="activePanel = 'chat'">
+        <i class="pi pi-comments"></i>
+        <span v-if="!sidebarCollapsed">对话</span>
+      </div>
+      <!-- 2、知识库导航 -->
+      <div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="activePanel = 'knowledge'">
+        <i class="pi pi-book"></i>
+        <span v-if="!sidebarCollapsed">知识库</span>
+      </div>
+      <!-- 3、插件导航 -->
+      <div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="activePanel = 'plugins'">
+        <i class="pi pi-puzzle-piece"></i>
+        <span v-if="!sidebarCollapsed">插件</span>
+      </div>
+      <!-- 4、设置导航 -->
+      <div class="nav-item" :class="{ active: activePanel === 'settings' }" @click="activePanel = 'settings'">
+        <i class="pi pi-cog"></i>
+        <span v-if="!sidebarCollapsed">设置</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 二、侧边栏内容 -->
+  <div class="sidebar-content" v-if="!sidebarCollapsed">
+    <!-- 1、对话面板 -->
+    <transition name="fade" mode="out-in">
+      <div v-if="activePanel === 'chat'" key="chat" class="panel-section">
+        <div class="panel-header">
+          <h3>会话列表</h3>
+          <Button icon="pi pi-plus" text @click="createSession" />
+        </div>
+        <div class="session-list">
+          <div
+            v-for="session in sessions"
+            :key="session.id"
+            class="session-item"
+            :class="{ active: session.id === activeSession }"
+            @click="activeSession = session.id"
+          >
+            <i class="pi pi-comment"></i>
+            <span class="session-name">{{ session.name }}</span>
           </div>
         </div>
-        
-        <!-- 二、侧边栏内容 -->
-        <div class="sidebar-content" v-if="!sidebarCollapsed">
-          <!-- 1、对话面板 -->
-          <div v-if="activePanel === 'chat'" class="panel-section">
-            <div class="panel-header">
-              <h3>会话列表</h3>
-              <Button icon="pi pi-plus" text @click="createSession" />
-            </div>
-            <div class="session-list">
-              <div
-                v-for="session in sessions"
-                :key="session.id"
-                class="session-item"
-                :class="{ active: session.id === activeSession }"
-                @click="activeSession = session.id"
-              >
-                <i class="pi pi-comment"></i>
-                <span class="session-name">{{ session.name }}</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 2、知识库面板 -->
-          <div v-if="activePanel === 'knowledge'" class="panel-section">
-            <div class="panel-header">
-              <h3>知识库</h3>
-              <Button icon="pi pi-upload" text @click="uploadDocument" />
-            </div>
-            <div class="knowledge-list">
-              <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
-                <i class="pi pi-file"></i>
-                <span>{{ doc.name }}</span>
-              </div>
-            </div>
+      </div>
+      
+      <!-- 2、知识库面板 -->
+      <div v-else-if="activePanel === 'knowledge'" key="knowledge" class="panel-section">
+        <div class="panel-header">
+          <h3>知识库</h3>
+          <Button icon="pi pi-upload" text @click="uploadDocument" />
+        </div>
+        <div class="knowledge-list">
+          <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
+            <i class="pi pi-file"></i>
+            <span>{{ doc.name }}</span>
           </div>
         </div>
+      </div>
+      
+      <!-- 3、插件面板 -->
+      <div v-else-if="activePanel === 'plugins'" key="plugins" class="panel-section">
+        <div class="panel-header">
+          <h3>插件</h3>
+        </div>
+        <div class="empty-state">
+          <i class="pi pi-puzzle-piece"></i>
+          <p>暂无插件</p>
+        </div>
+      </div>
+      
+      <!-- 4、设置面板 -->
+      <div v-else-if="activePanel === 'settings'" key="settings" class="panel-section">
+        <div class="panel-header">
+          <h3>设置</h3>
+        </div>
+        <div class="empty-state">
+          <i class="pi pi-cog"></i>
+          <p>设置功能开发中</p>
+        </div>
+      </div>
+    </transition>
+  </div>
         
         <!-- 三、折叠按钮 -->
         <div class="sidebar-toggle" @click="sidebarCollapsed = !sidebarCollapsed">
