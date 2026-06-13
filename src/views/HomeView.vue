@@ -76,64 +76,71 @@ const handleNewProject = () => {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: var(--spacing-2xl);
+  padding: 48px;
+  background-color: #FFFFFF;
+  color: #111827;
 }
 
 .welcome-section {
   text-align: center;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 48px;
 }
 
 .title {
   font-size: 48px;
   font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--spacing-sm);
+  color: #111827;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
   font-size: 18px;
-  color: var(--color-text-muted);
+  color: #6B7280;
 }
 
 .recent-projects {
   width: 100%;
   max-width: 800px;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 48px;
 }
 
 .section-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: var(--spacing-lg);
+  color: #374151;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .project-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--spacing-md);
+  gap: 12px;
 }
 
 .project-card {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  background-color: var(--color-primary);
-  border-radius: var(--radius-md);
+  gap: 12px;
+  padding: 16px;
+  background-color: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 150ms ease;
 }
 
 .project-card:hover {
-  background-color: var(--color-secondary);
-  transform: translateY(-2px);
+  background-color: #F3F4F6;
+  border-color: #D1D5DB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .project-icon {
-  font-size: 24px;
-  color: var(--color-cta);
+  font-size: 20px;
+  color: #2563EB;
 }
 
 .project-info {
@@ -143,20 +150,49 @@ const handleNewProject = () => {
 
 .project-name {
   font-weight: 600;
-  color: var(--color-text);
+  color: #111827;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14px;
 }
 
 .project-path,
 .project-date {
   font-size: 12px;
-  color: var(--color-text-muted);
+  color: #6B7280;
+  margin-top: 2px;
 }
 
 .actions {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 12px;
+}
+
+/* 强制覆盖 PrimeVue 按钮样式 */
+:deep(.p-button) {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+  font-weight: 500 !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  border-radius: 6px !important;
+}
+
+:deep(.p-button:hover) {
+  background-color: #1D4ED8 !important;
+  border-color: #1D4ED8 !important;
+}
+
+:deep(.p-button-secondary) {
+  background-color: #FFFFFF !important;
+  border-color: #D1D5DB !important;
+  color: #374151 !important;
+}
+
+:deep(.p-button-secondary:hover) {
+  background-color: #F9FAFB !important;
+  border-color: #9CA3AF !important;
 }
 </style>
