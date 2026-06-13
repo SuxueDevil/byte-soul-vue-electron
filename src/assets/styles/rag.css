@@ -11,6 +11,12 @@
   height: 100vh;
   overflow-y: auto;
   background-color: var(--surface-ground);
+  animation: pageIn 0.2s ease;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ==================== 二、页面头部 ==================== */
