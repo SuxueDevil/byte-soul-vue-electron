@@ -294,7 +294,7 @@ const testRetrieval = () => {
 }
 
 // 7、处理文件拖拽
-const handleDrop = (event: DragEvent) => {
+const handleDrop = (event: any) => {
   const files = event.dataTransfer?.files
   if (files) {
     console.log('拖拽的文件:', files)
