@@ -498,8 +498,9 @@
 }
 
 .rag-header :deep(.p-button) {
-  padding: 12px 24px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .stats-grid {

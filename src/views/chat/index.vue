@@ -175,7 +175,7 @@
             <!-- 头部 -->
             <div class="rag-header">
               <h2>RAG 知识库</h2>
-              <Button label="上传文档" icon="pi pi-upload" size="large" @click="showUploadDialog = true" />
+              <Button label="上传文档" icon="pi pi-upload" @click="showUploadDialog = true" />
             </div>
             
             <!-- 统计卡片 -->
