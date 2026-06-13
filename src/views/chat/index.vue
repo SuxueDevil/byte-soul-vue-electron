@@ -69,54 +69,21 @@
         </div>
       </div>
       
-<!-- 2、知识库面板 -->
-<div v-else-if="activePanel === 'knowledge'" key="knowledge" class="panel-section">
-  <div class="panel-header">
-    <h3>RAG 知识库</h3>
-    <Button icon="pi pi-plus" text @click="showUploadDialog = true" />
-  </div>
-  
-  <!-- 知识库统计 -->
-  <div class="knowledge-stats">
-    <div class="stat-item">
-      <span class="stat-value">{{ documents.length }}</span>
-      <span class="stat-label">文档数</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value">{{ ragConfig.topK }}</span>
-      <span class="stat-label">召回数</span>
-    </div>
-  </div>
-  
-  <!-- 检索配置 -->
-  <div class="rag-config">
-    <h4>检索配置</h4>
-    <div class="config-item">
-      <label>Top K</label>
-      <InputNumber v-model="ragConfig.topK" :min="1" :max="20" />
-    </div>
-    <div class="config-item">
-      <label>相似度阈值</label>
-      <InputNumber v-model="ragConfig.threshold" :min="0" :max="1" :step="0.1" />
-    </div>
-    <div class="config-item">
-      <label>启用重排序</label>
-      <ToggleButton v-model="ragConfig.enableRerank" />
-    </div>
-  </div>
-  
-  <!-- 文档列表 -->
-  <div class="knowledge-list">
-    <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
-      <i class="pi pi-file"></i>
-      <div class="doc-info">
-        <span class="doc-name">{{ doc.name }}</span>
-        <span class="doc-size">{{ doc.size }}</span>
+      <!-- 2、知识库面板 -->
+      <div v-else-if="activePanel === 'knowledge'" key="knowledge" class="panel-section">
+        <div class="panel-header">
+          <h3>知识库</h3>
+        </div>
+        <div class="knowledge-list">
+          <div v-for="doc in documents" :key="doc.id" class="knowledge-item">
+            <i class="pi pi-file"></i>
+            <div class="doc-info">
+              <span class="doc-name">{{ doc.name }}</span>
+              <span class="doc-size">{{ doc.size }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <Button icon="pi pi-trash" text severity="danger" @click="deleteDocument(doc.id)" />
-    </div>
-  </div>
-</div>
       
       <!-- 3、插件面板 -->
       <div v-else-if="activePanel === 'plugins'" key="plugins" class="panel-section">
@@ -291,16 +258,6 @@ const documents = ref([
   { id: '2', name: 'API 说明.md', size: '156 KB' }
 ])
 
-// 8、RAG 配置
-const ragConfig = ref({
-  topK: 5,
-  threshold: 0.7,
-  enableRerank: true
-})
-
-// 9、上传对话框
-const showUploadDialog = ref(false)
-
 // ==================== 三、方法 ====================
 
 // 1、关闭标签页
@@ -348,17 +305,17 @@ const attachImage = () => {
 
 // 7、上传文档
 const uploadDocument = () => {
-  showUploadDialog.value = true
+  // TODO: 上传文档
 }
 
-// 8、删除文档
-const deleteDocument = (id: string) => {
-  documents.value = documents.value.filter(doc => doc.id !== id)
-}
-
-// 9、跳转到 RAG 页面
+// 8、跳转到 RAG 页面
 const goToRAG = () => {
   router.push('/rag')
+}
+
+// 9、删除文档
+const deleteDocument = (id: string) => {
+  documents.value = documents.value.filter(doc => doc.id !== id)
 }
 </script>
 
