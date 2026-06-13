@@ -10,7 +10,11 @@
 
 <template>
   <div class="app" :data-theme="theme">
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -58,5 +62,16 @@ html, body {
 [data-theme="dark"] .app {
   background-color: #0F172A;
   color: #F8FAFC;
+}
+
+/* 3、路由切换动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
