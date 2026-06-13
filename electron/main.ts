@@ -33,13 +33,17 @@ function createWindow() {
     const devUrl = process.env.VITE_DEV_SERVER_URL || 'http://localhost:3000'
     console.log('Loading:', devUrl)
     
+    // 加载页面
     mainWindow.loadURL(devUrl)
     mainWindow.webContents.openDevTools()
     
-    // 等待页面加载完成后再显示
-    mainWindow.webContents.once('did-finish-load', () => {
-      console.log('Page loaded, showing window')
-      mainWindow?.show()
+    // 等待 dom-ready 后再延迟显示，确保 Vue 渲染完成
+    mainWindow.webContents.once('dom-ready', () => {
+      console.log('DOM ready, waiting for Vue...')
+      setTimeout(() => {
+        console.log('Showing window')
+        mainWindow?.show()
+      }, 2000)
     })
   } else {
     mainWindow.loadFile(join(__dirname, '../dist/index.html'))
