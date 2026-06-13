@@ -173,8 +173,8 @@ const handleNewProject = () => {
 
 .project-card:active,
 .project-card.selected {
-  background-color: #111827;
-  border-color: #111827;
+  background-color: #000000;
+  border-color: #000000;
   color: #FFFFFF;
 }
 
@@ -192,7 +192,7 @@ const handleNewProject = () => {
 .project-card:active .project-date,
 .project-card.selected .project-path,
 .project-card.selected .project-date {
-  color: #D1D5DB;
+  color: #9CA3AF;
 }
 
 .project-icon {
