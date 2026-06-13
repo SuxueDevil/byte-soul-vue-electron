@@ -26,7 +26,9 @@
           v-for="project in recentProjects"
           :key="project.path"
           class="project-card"
-          @click="openProject(project)"
+          :class="{ selected: selectedProject === project.path }"
+          @click="selectProject(project)"
+          @dblclick="openProject(project)"
         >
           <div class="project-icon">
             <i class="pi pi-folder"></i>
@@ -75,9 +77,17 @@ const recentProjects = ref<Project[]>([
   { name: '项目 C', path: 'E:\\Dev\\project-c', lastOpened: '2024-01-13' }
 ])
 
+// 2、选中的项目
+const selectedProject = ref<string>('')
+
 // ==================== 四、方法 ====================
 
-// 1、打开项目
+// 1、选中项目
+const selectProject = (project: Project) => {
+  selectedProject.value = project.path
+}
+
+// 2、打开项目
 const openProject = (project: Project) => {
   // TODO: 打开项目
   console.log('打开项目:', project)
