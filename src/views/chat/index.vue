@@ -141,13 +141,11 @@
               class="message"
               :class="message.role"
             >
-              <div class="message-avatar">
-                <i :class="message.role === 'user' ? 'pi pi-user' : 'pi pi-bolt'"></i>
-              </div>
-              <div class="message-content">
-                <div class="message-text" v-if="message.role === 'user' || message.content">{{ message.content }}</div>
-                <ProgressSpinner v-else style="width:24px;height:24px" strokeWidth="4" />
-                <div class="message-time">{{ message.timestamp }}</div>
+              <div class="message-bubble">
+                <div v-if="message.role === 'user' || message.content" class="message-text">{{ message.content }}</div>
+                <div v-else class="thinking-wrapper">
+                  <ProgressSpinner style="width:20px;height:20px" strokeWidth="3" />
+                </div>
               </div>
             </div>
           </div>
