@@ -157,8 +157,8 @@
               <textarea
                 v-model="inputText"
                 class="message-input"
-                placeholder="输入消息... (Ctrl+Enter 发送)"
-                @keydown.ctrl.enter="sendMessage"
+                placeholder="输入消息... (Enter 发送)"
+                @keydown.enter.prevent="sendMessage()"
               ></textarea>
               <div class="input-actions">
                 <Button icon="pi pi-paperclip" text @click="attachFile" />
@@ -500,11 +500,17 @@ const sendMessage = async (text?: string) => {
   // 4、调用 API 流式输出
   try {
     const { agentApi } = await import('@/api/modules/agent')
+    let gotContent = false
     for await (const chunk of agentApi.sendMessage({ messages: chatMessages })) {
+      console.log('SSE chunk:', chunk)
       const delta = chunk.choices[0]?.delta
       if (delta?.content) {
         aiMsg.content += delta.content
+        gotContent = true
       }
+    }
+    if (!gotContent && !aiMsg.content) {
+      aiMsg.content = '（无响应内容）'
     }
   } catch (error) {
     console.error('发送消息失败:', error)
