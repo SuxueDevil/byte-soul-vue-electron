@@ -468,19 +468,48 @@ const createSession = () => {
 }
 
 // 4、发送消息
-const sendMessage = () => {
-  if (!inputText.value.trim()) return
+const sendMessage = async (text?: string) => {
+  const content = text || inputText.value.trim()
+  if (!content) return
   
-  messages.value.push({
+  // 1、添加用户消息
+  const userMsg = {
     id: String(Date.now()),
-    role: 'user',
-    content: inputText.value,
+    role: 'user' as const,
+    content,
     timestamp: new Date().toLocaleTimeString()
-  })
-  
+  }
+  messages.value.push(userMsg)
   inputText.value = ''
   
-  // TODO: 调用 pyAgent API
+  // 2、构建请求消息列表（取最近 10 条）
+  const chatMessages = messages.value.slice(-10).map(m => ({
+    role: m.role as 'user' | 'assistant',
+    content: m.content
+  }))
+  
+  // 3、添加 AI 占位消息
+  const aiMsg = {
+    id: String(Date.now()),
+    role: 'assistant' as const,
+    content: '',
+    timestamp: new Date().toLocaleTimeString()
+  }
+  messages.value.push(aiMsg)
+  
+  // 4、调用 API 流式输出
+  try {
+    const { agentApi } = await import('@/api/modules/agent')
+    for await (const chunk of agentApi.sendMessage({ messages: chatMessages })) {
+      const delta = chunk.choices[0]?.delta
+      if (delta?.content) {
+        aiMsg.content += delta.content
+      }
+    }
+  } catch (error) {
+    console.error('发送消息失败:', error)
+    aiMsg.content = '抱歉，请求失败，请稍后重试。'
+  }
 }
 
 // 5、附加文件
