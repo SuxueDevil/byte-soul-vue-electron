@@ -145,7 +145,10 @@
                 <i :class="message.role === 'user' ? 'pi pi-user' : 'pi pi-android'"></i>
               </div>
               <div class="message-content">
-                <div class="message-text" v-html="message.content"></div>
+                <div class="message-text" v-if="message.content">{{ message.content }}</div>
+                <div v-else class="thinking-dots">
+                  <span></span><span></span><span></span>
+                </div>
                 <div class="message-time">{{ message.timestamp }}</div>
               </div>
             </div>
