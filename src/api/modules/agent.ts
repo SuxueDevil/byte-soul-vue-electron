@@ -127,7 +127,8 @@ export const agentApi = {
       throw new Error(`请求失败: ${response.status} ${response.statusText}`)
     }
 
+    // 非流式返回的是完整的 chat.completion 对象
     const data = await response.json()
-    return data.choices?.[0]?.message?.content || ''
+    return data.choices?.[0]?.message?.content || data.choices?.[0]?.delta?.content || ''
   }
 }

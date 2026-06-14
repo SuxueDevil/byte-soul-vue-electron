@@ -489,20 +489,19 @@ const sendMessage = async (text?: string) => {
   }))
   
   // 3、添加 AI 占位消息
-  const aiMsg = {
+  messages.value.push({
     id: String(Date.now()),
     role: 'assistant' as const,
     content: '',
     timestamp: new Date().toLocaleTimeString()
-  }
-  messages.value.push(aiMsg)
+  })
+  const aiMsg = messages.value[messages.value.length - 1]
   
-  // 4、调用 API 流式输出
+  // 4、调用 API（流式）
   try {
     const { agentApi } = await import('@/api/modules/agent')
     let gotContent = false
     for await (const chunk of agentApi.sendMessage({ messages: chatMessages })) {
-      console.log('SSE chunk:', chunk)
       const delta = chunk.choices[0]?.delta
       if (delta?.content) {
         aiMsg.content += delta.content
