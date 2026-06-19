@@ -8,7 +8,7 @@
  * - 支持文档上传、搜索
  */
 
-import { get, post } from '@/api/client'
+import { appConfig } from '@/config'
 
 // ==================== 一、知识库 API ====================
 
@@ -18,10 +18,14 @@ export const knowledgeApi = {
    * @param file - 文件对象
    * @returns 返回上传结果
    */
-  upload(file: File) {
+  async upload(file: File): Promise<{ chunk_count: number }> {
+    const url = `${appConfig.apiBaseUrl}/rag/ingest`
     const fd = new FormData()
     fd.append('file', file)
-    return post('/knowledge/upload', fd)
+    const response = await fetch(url, { method: 'POST', body: fd })
+    if (!response.ok) throw new Error(`上传失败: ${response.status}`)
+    const result = await response.json()
+    return result.data || result
   },
 
   /**
@@ -30,7 +34,10 @@ export const knowledgeApi = {
    * @param topK - 返回结果数量（默认 5）
    * @returns 返回搜索结果
    */
-  search(query: string, topK = 5) {
-    return get('/knowledge/search', { params: { query, top_k: topK } })
+  async search(query: string, topK = 5) {
+    const url = `${appConfig.apiBaseUrl}/rag/search?query=${encodeURIComponent(query)}&top_k=${topK}`
+    const response = await fetch(url)
+    if (!response.ok) throw new Error(`搜索失败: ${response.status}`)
+    return await response.json()
   }
 }

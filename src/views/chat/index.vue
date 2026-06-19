@@ -125,7 +125,7 @@
                     v-for="(item, index) in suggestions"
                     :key="item.text"
                     class="suggestion-card"
-                    @click="sendMessage(item.text)"
+                    @click="handleSuggestion(item)"
                   >
                     <i :class="item.icon"></i>
                     <span>{{ item.text }}</span>
@@ -331,6 +331,7 @@
           />
         </div>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -353,10 +354,10 @@ const RAG_CONFIG_STORAGE_KEY = 'chat.ragConfig'
 
 // 2、建议卡片数据
 const suggestions = [
-  { icon: 'pi pi-upload', text: '知识上传' },
-  { icon: 'pi pi-search', text: 'RAG浏览' },
-  { icon: 'pi pi-sitemap', text: '知识图谱' },
-  { icon: 'pi pi-cog', text: '模型配置' }
+  { icon: 'pi pi-upload', text: '知识上传', action: 'knowledge' as const },
+  { icon: 'pi pi-search', text: 'RAG浏览', action: 'knowledge' as const },
+  { icon: 'pi pi-sitemap', text: '知识图谱', action: 'knowledge' as const },
+  { icon: 'pi pi-cog', text: '模型配置', action: 'settings' as const }
 ]
 
 // ==================== 二、状态 ====================
@@ -465,6 +466,15 @@ const addTab = () => {
 const createSession = () => {
   const newId = String(Date.now())
   sessions.value.push({ id: newId, name: `新会话 ${newId}` })
+}
+
+// 3.5、建议卡片点击
+const handleSuggestion = (item: { text: string; action: string }) => {
+  if (item.action === 'knowledge' || item.action === 'settings') {
+    activePanel.value = item.action
+  } else {
+    sendMessage(item.text)
+  }
 }
 
 // 4、发送消息
