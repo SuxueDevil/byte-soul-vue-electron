@@ -24,22 +24,22 @@
   <i :class="sidebarCollapsed ? 'pi pi-chevron-right' : 'pi pi-chevron-left'"></i>
 </div>
       <!-- 1、对话导航 -->
-      <div class="nav-item" :class="{ active: activePanel === 'chat' }" @click="activePanel = 'chat'">
+      <div class="nav-item" :class="{ active: activePanel === 'chat' }" @click="switchPanel('chat')">
         <i class="pi pi-comments"></i>
         <span v-if="!sidebarCollapsed">对话</span>
       </div>
 <!-- 2、知识库导航 -->
-<div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="activePanel = 'knowledge'">
+<div class="nav-item" :class="{ active: activePanel === 'knowledge' }" @click="switchPanel('knowledge')">
   <i class="pi pi-book"></i>
   <span v-if="!sidebarCollapsed">知识库</span>
 </div>
 <!-- 3、插件导航 -->
-<div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="activePanel = 'plugins'">
+<div class="nav-item" :class="{ active: activePanel === 'plugins' }" @click="switchPanel('plugins')">
   <i class="pi pi-box"></i>
   <span v-if="!sidebarCollapsed">插件</span>
       </div>
       <!-- 4、设置导航 -->
-      <div class="nav-item" :class="{ active: activePanel === 'settings' }" @click="activePanel = 'settings'">
+      <div class="nav-item" :class="{ active: activePanel === 'settings' }" @click="switchPanel('settings')">
         <i class="pi pi-cog"></i>
         <span v-if="!sidebarCollapsed">设置</span>
       </div>
@@ -331,8 +331,31 @@
           />
         </div>
       </div>
-      </div>
     </div>
+    
+    <!-- 上传文档对话框 -->
+    <Dialog v-model:visible="showUploadDialog" modal header="上传文档" :style="{ width: '450px' }">
+      <div class="upload-content">
+        <div class="upload-area" @dragover.prevent @drop.prevent="handleDrop" @click="triggerFileInput">
+          <i class="pi pi-cloud-upload upload-icon"></i>
+          <p>拖拽文件到此处或点击上传</p>
+          <span class="upload-hint">支持 PDF、Markdown、TXT 格式</span>
+          <input ref="fileInput" type="file" multiple accept=".pdf,.md,.txt" style="display:none" @change="handleFileSelect" />
+        </div>
+        <div v-if="uploading" class="upload-progress">
+          <ProgressSpinner style="width:24px;height:24px" />
+          <span>上传中...</span>
+        </div>
+        <div v-if="uploadResult" class="upload-result">
+          <i class="pi pi-check-circle" style="color:#22c55e"></i>
+          <span>上传成功，共 {{ uploadResult.chunk_count }} 个分块</span>
+        </div>
+      </div>
+      <template #footer>
+        <Button label="取消" text @click="showUploadDialog = false" />
+        <Button label="确定" @click="showUploadDialog = false" />
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -347,6 +370,7 @@ import InputNumber from 'primevue/inputnumber'
 import Slider from 'primevue/slider'
 import ToggleSwitch from 'primevue/toggleswitch'
 import ProgressSpinner from 'primevue/progressspinner'
+import Dialog from 'primevue/dialog'
 import FileTreeNode from '@/components/file/FileTreeNode.vue'
 import '@/assets/styles/chat.css'
 
@@ -371,6 +395,13 @@ const activeTab = ref('')
 // 2、侧边栏
 const sidebarCollapsed = ref(false)
 const activePanel = ref('chat')
+
+const switchPanel = (panel: string) => {
+  activePanel.value = panel
+  if (panel === 'knowledge') {
+    loadDocuments()
+  }
+}
 
 // 3、会话
 const sessions = ref<{ id: string; name: string }[]>([])
@@ -401,10 +432,22 @@ const fileTree = ref([
 ])
 
 // 7、知识库
-const documents = ref<{ id: string; name: string; size: string; chunks: number }[]>([
-  { id: '1', name: '项目文档.pdf', size: '2.4 MB', chunks: 156 },
-  { id: '2', name: 'API 说明.md', size: '156 KB', chunks: 45 }
-])
+const documents = ref<{ id: string; name: string; size: string; chunks: number }[]>([])
+
+const loadDocuments = async () => {
+  try {
+    const { knowledgeApi } = await import('@/api/modules/knowledge')
+    const docs = await knowledgeApi.listDocuments()
+    documents.value = docs.map((d: any) => ({
+      id: d.doc_hash || d.id,
+      name: d.file_name || d.filename || d.name || '未知文件',
+      size: d.size || '',
+      chunks: d.chunk_count || d.chunks || 0
+    }))
+  } catch (e) {
+    console.warn('加载文档列表失败:', e)
+  }
+}
 
 // 8、RAG 配置
 const defaultRagConfig = () => ({
@@ -422,8 +465,9 @@ const ragConfig = ref(defaultRagConfig())
 onMounted(() => {
   try {
     const raw = localStorage.getItem(RAG_CONFIG_STORAGE_KEY)
-    if (!raw) return
-    ragConfig.value = { ...defaultRagConfig(), ...JSON.parse(raw) }
+    if (raw) {
+      ragConfig.value = { ...defaultRagConfig(), ...JSON.parse(raw) }
+    }
   } catch (e) {
     console.warn('读取 RAG 配置失败:', e)
   }
@@ -443,6 +487,53 @@ watch(
 
 // 9、上传对话框
 const showUploadDialog = ref(false)
+const fileInput = ref<HTMLInputElement>()
+const uploading = ref(false)
+const uploadResult = ref<{ chunk_count: number } | null>(null)
+
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
+
+const handleFileSelect = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (target.files) {
+    await uploadFiles(Array.from(target.files))
+  }
+}
+
+const handleDrop = async (event: DragEvent) => {
+  if (event.dataTransfer?.files) {
+    await uploadFiles(Array.from(event.dataTransfer.files))
+  }
+}
+
+const uploadFiles = async (files: File[]) => {
+  if (!files.length) return
+  uploading.value = true
+  uploadResult.value = null
+  try {
+    const { knowledgeApi } = await import('@/api/modules/knowledge')
+    let totalChunks = 0
+    for (const file of files) {
+      try {
+        const result = await knowledgeApi.upload(file)
+        totalChunks += result.chunk_count
+      } catch (e: any) {
+        console.error(`文件 ${file.name} 上传失败:`, e)
+        alert(`文件 ${file.name} 上传失败: ${e.message}`)
+        return
+      }
+    }
+    uploadResult.value = { chunk_count: totalChunks }
+    loadDocuments()
+  } catch (error: any) {
+    console.error('上传失败:', error)
+    alert('上传失败: ' + error.message)
+  } finally {
+    uploading.value = false
+  }
+}
 
 // 10、总分块数
 const totalChunks = computed(() => {
@@ -543,8 +634,15 @@ const uploadDocument = () => {
 }
 
 // 8、删除文档
-const deleteDocument = (id: string) => {
-  documents.value = documents.value.filter(doc => doc.id !== id)
+const deleteDocument = async (id: string) => {
+  try {
+    const { knowledgeApi } = await import('@/api/modules/knowledge')
+    await knowledgeApi.deleteDocument(id)
+    documents.value = documents.value.filter(doc => doc.id !== id)
+  } catch (e) {
+    console.error('删除文档失败:', e)
+    alert('删除失败')
+  }
 }
 </script>
 
