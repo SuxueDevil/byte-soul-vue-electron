@@ -2,6 +2,8 @@
 
 AI 代码助手桌面端应用，对接 ByteSoul pyAgent 后端。
 
+后端地址：https://github.com/SuxueDevil/byte-soul-py
+
 <img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/b5f07617-1cc6-408a-8f12-735ce7e78864" />
 
 
