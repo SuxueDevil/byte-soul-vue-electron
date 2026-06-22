@@ -59,4 +59,16 @@ html, body {
   background-color: #0F172A;
   color: #F8FAFC;
 }
+
+/* 3、思考中动画 */
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 </style>
