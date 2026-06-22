@@ -1,6 +1,6 @@
 # ByteSoul Desktop
 
-AI 代码助手桌面端应用，对接 ByteSoul pyAgent 后端。
+RAG助手桌面端应用，对接 ByteSoul pyAgent 后端
 
 后端地址：https://github.com/SuxueDevil/byte-soul-py
 
