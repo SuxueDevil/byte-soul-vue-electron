@@ -1,11 +1,27 @@
-# ByteSoul Desktop
+# ByteSoul
 
-AI 代码助手桌面端应用，对接 ByteSoul pyAgent 后端。
+<div align="center">
 
-后端地址：https://github.com/SuxueDevil/byte-soul-py
+**Electron × Agent × RAG**
+
+后端仓库：<https://github.com/SuxueDevil/byte-soul-py>
+
+</div>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  <img src="https://img.shields.io/badge/electron-28-blueviolet.svg" alt="Electron" />
+  <img src="https://img.shields.io/badge/vue-3.4-brightgreen.svg" alt="Vue" />
+  <img src="https://img.shields.io/badge/typescript-5.3-blue.svg" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey" alt="Platform" />
+</p>
+
+---
+# 效果展示
 
 <img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/b5f07617-1cc6-408a-8f12-735ce7e78864" />
 
+---
 
 ## 技术栈
 
@@ -19,6 +35,8 @@ AI 代码助手桌面端应用，对接 ByteSoul pyAgent 后端。
 | Pinia | ^2.1.0 | 状态管理 |
 | Vue Router | ^4.2.0 | 路由管理 |
 | PrimeVue 4 | ^4.5.5 | UI 组件库（黑白色调） |
+
+---
 
 ## 目录结构
 
@@ -43,6 +61,7 @@ src/
 ├── App.vue
 └── main.ts
 ```
+---
 
 ## 功能模块
 
